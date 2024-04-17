@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobs.pages.AppController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="365.0" prefWidth="351.0" spacing="32.0">
+         <children>
+            <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+               <children>
+                  <Label text="Guly" textAlignment="CENTER" textFill="#5e5e5e">
+                     <font>
+                        <Font name="System Bold" size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="8.0">
+               <children>
+                  <Label text="Email" />
+                  <TextField fx:id="email" onAction="#onChangeEmail" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="8.0">
+               <children>
+                  <Label text="Senha" />
+                  <TextField />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" layoutX="10.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="8.0">
+               <children>
+                  <Button mnemonicParsing="false" text="Entrar" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+   </padding>
+</HBox>
