@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import java.net.*;
 import java.io.*;
+import java.sql.SQLException;
 
 public class Server extends Thread
 {
@@ -24,8 +25,9 @@ public class Server extends Thread
                     new Server(serverSocket.accept());
                 }
             }
-            catch (IOException e)
+            catch (IOException | SQLException e)
             {
+                System.err.println(e);
                 System.err.println("Accept failed.");
                 System.exit(1);
             }
@@ -49,8 +51,7 @@ public class Server extends Thread
         }
     }
 
-    private Server(Socket clientSoc)
-    {
+    private Server(Socket clientSoc) throws SQLException {
         clientSocket = clientSoc;
         this.routes = Routes.getInstance();
         start();

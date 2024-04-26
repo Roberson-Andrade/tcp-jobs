@@ -1,7 +1,7 @@
 package org.jobs.pages;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import org.json.JSONObject;
 import org.jobs.tcp.Client;
 
@@ -9,7 +9,10 @@ import java.io.IOException;
 
 public class AppController {
     @FXML
-    private Label welcomeText;
+    private TextField email;
+
+    @FXML
+    private TextField password;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
@@ -17,7 +20,13 @@ public class AppController {
     }
 
     @FXML
-    protected void onChangeEmail() throws IOException {
-        Client.request(new JSONObject("{ \"operacao\": \"loginCandidato\" }"));
+    protected void onSubmit() throws IOException {
+        JSONObject data = new JSONObject("{ \"operacao\": \"loginCandidato\" }");
+
+        data.put("email", email.getText());
+        data.put("senha", password.getText());
+        data.put("nome", "Roberson");
+
+        Client.request(data);
     }
 }

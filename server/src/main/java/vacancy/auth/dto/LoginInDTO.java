@@ -1,8 +1,15 @@
 package vacancy.auth.dto;
 
+import org.json.JSONObject;
+
 public class LoginInDTO {
     String email;
     String password;
+
+    public LoginInDTO(JSONObject data) {
+        this.email = data.getString("email");
+        this.password = data.getString("senha");
+    }
 
     public String getEmail() {
         return email;

@@ -13,6 +13,12 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
+    <db.schema>PUBLIC</db.schema>
+    <db.driver>org.h2.Driver</db.driver>
+    <db.url>jdbc:h2:${basedir}/target/jooq-codegen;</db.url>
+    <db.username>sa</db.username>
+    <db.password>123</db.password>
+    <h2.version>2.2.224</h2.version>
   </properties>
 
   <dependencies>
@@ -20,18 +26,6 @@
       <groupId>org.json</groupId>
       <artifactId>json</artifactId>
       <version>20240303</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.hibernate</groupId>
-      <artifactId>hibernate-core</artifactId>
-      <version>6.4.4.Final</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-simple</artifactId>
-      <version>2.0.7</version>
     </dependency>
 
     <dependency>
@@ -43,7 +37,105 @@
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
-      <version>2.2.224</version>
+      <version>${h2.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq</artifactId>
+      <version>3.19.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq-meta</artifactId>
+      <version>3.19.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.jooq</groupId>
+      <artifactId>jooq-codegen</artifactId>
+      <version>3.19.7</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.zaxxer</groupId>
+      <artifactId>HikariCP</artifactId>
+      <version>5.1.0</version>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>sql-maven-plugin</artifactId>
+        <version>1.5</version>
+        <configuration>
+          <driver>${db.driver}</driver>
+          <url>${db.url}</url>
+          <username>${db.username}</username>
+          <password>${db.password}</password>
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>execute-ddl</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>execute</goal>
+            </goals>
+            <configuration>
+              <srcFiles>
+                <scrFile>src/main/resources/schema.sql</scrFile>
+              </srcFiles>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.jooq</groupId>
+        <artifactId>jooq-codegen-maven</artifactId>
+        <dependencies>
+          <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <id>jooq-codegen</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>generate</goal>
+            </goals>
+            <configuration>
+              <jdbc>
+                <url>${db.url}</url>
+                <user>${db.username}</user>
+                <password>${db.password}</password>
+              </jdbc>
+              <generator>
+                <database>
+                  <!--includes>.*</includes-->
+                  <inputSchema>${db.schema}</inputSchema>
+                </database>
+                <target>
+                  <packageName>com.company.project.jooq.codegen</packageName>
+                  <directory>target/generated-sources/jooq</directory>
+                </target>
+              </generator>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
 </project>
