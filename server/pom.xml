@@ -1,158 +1,186 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>org.example</groupId>
-  <artifactId>server</artifactId>
-  <version>1.0-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>org.jobs</groupId>
+    <artifactId>server</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>server</name>
-  <url>http://maven.apache.org</url>
+    <name>server</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.release>17</maven.compiler.release>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.release>17</maven.compiler.release>
 
-    <org.jooq.groupId>org.jooq</org.jooq.groupId>
-    <org.jooq.version>3.19.7</org.jooq.version>
+        <org.jooq.groupId>org.jooq</org.jooq.groupId>
+        <org.jooq.version>3.19.7</org.jooq.version>
 
-    <db.schema>PUBLIC</db.schema>
-    <db.driver>org.h2.Driver</db.driver>
-    <db.url>jdbc:h2:./target/database</db.url>
-    <db.username>sa</db.username>
-    <db.password/>
-    <h2.version>2.2.220</h2.version>
-  </properties>
+        <db.schema>PUBLIC</db.schema>
+        <db.driver>org.h2.Driver</db.driver>
+        <db.url>jdbc:h2:./database</db.url>
+        <db.username>sa</db.username>
+        <db.password/>
+        <h2.version>2.2.220</h2.version>
+    </properties>
 
-  <dependencies>
-    <dependency>
-      <groupId>org.json</groupId>
-      <artifactId>json</artifactId>
-      <version>20240303</version>
-    </dependency>
+    <dependencies>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20240303</version>
+        </dependency>
 
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.2</version>
-    </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.2</version>
+        </dependency>
 
-    <dependency>
-      <groupId>com.h2database</groupId>
-      <artifactId>h2</artifactId>
-      <version>${h2.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jooq</groupId>
-      <artifactId>jooq-meta</artifactId>
-      <version>3.19.7</version>
-    </dependency>
-
-    <!-- Database access -->
-    <dependency>
-      <groupId>${org.jooq.groupId}</groupId>
-      <artifactId>jooq</artifactId>
-      <version>${org.jooq.version}</version>
-    </dependency>
-
-    <dependency>
-      <groupId>com.zaxxer</groupId>
-      <artifactId>HikariCP</artifactId>
-      <version>5.1.0</version>
-    </dependency>
-  </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.11.0</version>
-        <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
-        </configuration>
-      </plugin>
-
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>sql-maven-plugin</artifactId>
-        <version>1.5</version>
-
-        <executions>
-          <execution>
-            <id>init-db</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>execute</goal>
-            </goals>
-          </execution>
-        </executions>
-
-        <configuration>
-          <driver>org.h2.Driver</driver>
-          <url>${db.url}</url>
-          <username>${db.username}</username>
-          <password>${db.password}</password>
-          <srcFiles>
-            <srcFile>${basedir}/src/main/resources/schema.sql</srcFile>
-          </srcFiles>
-        </configuration>
-
-        <dependencies>
-          <dependency>
+        <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
-          </dependency>
-        </dependencies>
-      </plugin>
+        </dependency>
 
-      <plugin>
-        <groupId>${org.jooq.groupId}</groupId>
-        <artifactId>jooq-codegen-maven</artifactId>
-        <version>${org.jooq.version}</version>
+        <dependency>
+            <groupId>org.jooq</groupId>
+            <artifactId>jooq-meta</artifactId>
+            <version>3.19.7</version>
+        </dependency>
 
-        <executions>
-          <execution>
-            <id>generate-java</id>
-            <phase>generate-sources</phase>
-            <goals>
-              <goal>generate</goal>
-            </goals>
+        <!-- Database access -->
+        <dependency>
+            <groupId>${org.jooq.groupId}</groupId>
+            <artifactId>jooq</artifactId>
+            <version>${org.jooq.version}</version>
+        </dependency>
 
-            <!-- TODO: Possibly edit the code generation configuration here, to reflect what you're doing -->
-            <configuration>
-              <jdbc>
-                <url>${db.url}</url>
-                <user>${db.username}</user>
-                <password>${db.password}</password>
-              </jdbc>
-              <generator>
-                <database>
-                  <includes>.*</includes>
-                  <schemata>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>5.1.0</version>
+        </dependency>
+    </dependencies>
 
-                    <!-- H2 and others are upper case by default -->
-                    <schema>
-                      <inputSchema>PUBLIC</inputSchema>
-                    </schema>
-                  </schemata>
-                </database>
-                <generate>
-                  <generatedAnnotation>false</generatedAnnotation>
-                </generate>
-                <target>
-                  <packageName>codegen.jooq</packageName>
-                  <directory>src/main/java</directory>
-                </target>
-              </generator>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.11.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>sql-maven-plugin</artifactId>
+                <version>1.5</version>
+
+                <executions>
+                    <execution>
+                        <id>init-db</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>execute</goal>
+                        </goals>
+                    </execution>
+                </executions>
+
+                <configuration>
+                    <driver>org.h2.Driver</driver>
+                    <url>${db.url}</url>
+                    <username>${db.username}</username>
+                    <password>${db.password}</password>
+                    <srcFiles>
+                        <srcFile>${basedir}/src/main/resources/schema.sql
+                        </srcFile>
+                    </srcFiles>
+                </configuration>
+
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>${h2.version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+
+            <plugin>
+                <groupId>${org.jooq.groupId}</groupId>
+                <artifactId>jooq-codegen-maven</artifactId>
+                <version>${org.jooq.version}</version>
+
+                <executions>
+                    <execution>
+                        <id>generate-java</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+
+                        <!-- TODO: Possibly edit the code generation configuration here, to reflect what you're doing -->
+                        <configuration>
+                            <jdbc>
+                                <url>${db.url}</url>
+                                <user>${db.username}</user>
+                                <password>${db.password}</password>
+                            </jdbc>
+                            <generator>
+                                <database>
+                                    <includes>.*</includes>
+                                    <schemata>
+
+                                        <!-- H2 and others are upper case by default -->
+                                        <schema>
+                                            <inputSchema>PUBLIC</inputSchema>
+                                        </schema>
+                                    </schemata>
+                                </database>
+                                <generate>
+                                    <generatedAnnotation>false
+                                    </generatedAnnotation>
+                                </generate>
+                                <target>
+                                    <packageName>codegen.jooq</packageName>
+                                    <directory>src/main/java</directory>
+                                </target>
+                            </generator>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.7.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <packageName>jobs</packageName>
+                            <mainClass>jobs.app.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

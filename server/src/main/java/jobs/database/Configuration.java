@@ -13,7 +13,7 @@ public class Configuration {
     public Configuration() {
         ds = new HikariDataSource();
         ds.setDriverClassName("org.h2.jdbcx.JdbcDataSource");
-        ds.setJdbcUrl("jdbc:h2:./target/database;DB_CLOSE_DELAY=-1");
+        ds.setJdbcUrl("jdbc:h2:./database;DB_CLOSE_DELAY=-1");
         ds.setUsername("sa");
         ds.setPassword("");
     }
