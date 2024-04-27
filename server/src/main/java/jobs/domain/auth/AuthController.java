@@ -1,10 +1,10 @@
-package vacancy.domain.auth;
+package jobs.domain.auth;
 
 import codegen.jooq.tables.records.ApplicantRecord;
+import jobs.domain.auth.dto.*;
+import jobs.errors.ApplicationException;
+import jobs.utils.controller.BaseController;
 import org.json.JSONObject;
-import vacancy.domain.auth.dto.*;
-import vacancy.errors.ApplicationException;
-import vacancy.utils.controller.BaseController;
 
 public class AuthController extends BaseController {
     final ApplicantRepository applicantRepository;

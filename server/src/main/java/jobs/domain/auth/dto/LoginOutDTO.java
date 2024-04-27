@@ -1,4 +1,4 @@
-package vacancy.domain.auth.dto;
+package jobs.domain.auth.dto;
 
 public class LoginOutDTO {
     Integer status;

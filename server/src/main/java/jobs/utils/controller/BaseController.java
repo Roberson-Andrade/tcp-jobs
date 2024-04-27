@@ -1,4 +1,4 @@
-package vacancy.utils.controller;
+package jobs.utils.controller;
 
 import org.json.JSONObject;
 

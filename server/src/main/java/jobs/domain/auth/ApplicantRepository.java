@@ -1,9 +1,9 @@
-package vacancy.domain.auth;
+package jobs.domain.auth;
 
 import codegen.jooq.tables.Applicant;
 import codegen.jooq.tables.records.ApplicantRecord;
+import jobs.domain.auth.dto.ApplicantDTO;
 import org.jooq.DSLContext;
-import vacancy.domain.auth.dto.ApplicantDTO;
 
 public class ApplicantRepository {
     private final DSLContext ctx;
@@ -25,7 +25,7 @@ public class ApplicantRepository {
 
         int stored = applicantRecord.store();
 
-        if(stored == 1) {
+        if (stored == 1) {
             return applicantRecord;
         }
 

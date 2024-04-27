@@ -1,11 +1,11 @@
-package vacancy.server;
+package jobs.server;
 
+import jobs.database.Configuration;
+import jobs.domain.auth.ApplicantRepository;
+import jobs.domain.auth.AuthController;
+import jobs.errors.ApplicationException;
 import org.jooq.DSLContext;
 import org.json.JSONObject;
-import vacancy.database.Configuration;
-import vacancy.domain.auth.ApplicantRepository;
-import vacancy.domain.auth.AuthController;
-import vacancy.errors.ApplicationException;
 
 import java.sql.SQLException;
 

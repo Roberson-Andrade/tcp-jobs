@@ -1,4 +1,4 @@
-package vacancy.domain.auth.dto;
+package jobs.domain.auth.dto;
 
 import org.json.JSONObject;
 
@@ -7,11 +7,12 @@ public class SignInInDTO {
     String password;
     String name;
 
-
     public SignInInDTO(JSONObject input) {
         this.email = input.getString("email");
-        this.password = input.getString("senha");;
-        this.name = input.getString("nome");;
+        this.password = input.getString("senha");
+        ;
+        this.name = input.getString("nome");
+        ;
     }
 
     public String getEmail() {

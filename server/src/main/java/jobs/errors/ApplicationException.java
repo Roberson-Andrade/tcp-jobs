@@ -1,4 +1,4 @@
-package vacancy.errors;
+package jobs.errors;
 
 public class ApplicationException extends Exception {
     Integer status;

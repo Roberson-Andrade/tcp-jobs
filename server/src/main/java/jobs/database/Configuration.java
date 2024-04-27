@@ -1,4 +1,4 @@
-package vacancy.database;
+package jobs.database;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.jooq.DSLContext;

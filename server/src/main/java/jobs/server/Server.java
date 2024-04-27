@@ -1,55 +1,17 @@
-package vacancy.server;
+package jobs.server;
 
 import org.json.JSONObject;
 
-import java.net.*;
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
 import java.sql.SQLException;
 
-public class Server extends Thread
-{
-    protected Socket clientSocket;
+public class Server extends Thread {
     private final Routes routes;
-
-    public static void listen(Integer port)
-    {
-        ServerSocket serverSocket = null;
-
-        try {
-            serverSocket = new ServerSocket(port);
-            System.out.println ("Connection Socket Created");
-            try {
-                while(true)
-                {
-                    System.out.println ("Waiting for Connection");
-                    new Server(serverSocket.accept());
-                }
-            }
-            catch (IOException | SQLException e)
-            {
-                System.err.println(e);
-                System.err.println("Accept failed.");
-                System.exit(1);
-            }
-        }
-        catch (IOException e)
-        {
-            System.err.println("Could not listen on port: 10008.");
-            System.exit(1);
-        }
-        finally
-        {
-            try {
-                assert serverSocket != null;
-                serverSocket.close();
-            }
-            catch (IOException e)
-            {
-                System.err.println("Could not close port: 10008.");
-                System.exit(1);
-            }
-        }
-    }
+    protected Socket clientSocket;
 
     private Server(Socket clientSoc) throws SQLException {
         clientSocket = clientSoc;
@@ -57,9 +19,38 @@ public class Server extends Thread
         start();
     }
 
-    public void run()
-    {
-        System.out.println ("New Communication Thread Started");
+    public static void listen(Integer port) {
+        ServerSocket serverSocket = null;
+
+        try {
+            serverSocket = new ServerSocket(port);
+            System.out.println("Connection Socket Created");
+            try {
+                while (true) {
+                    System.out.println("Waiting for Connection");
+                    new Server(serverSocket.accept());
+                }
+            } catch (IOException | SQLException e) {
+                System.err.println(e);
+                System.err.println("Accept failed.");
+                System.exit(1);
+            }
+        } catch (IOException e) {
+            System.err.println("Could not listen on port: 10008.");
+            System.exit(1);
+        } finally {
+            try {
+                assert serverSocket != null;
+                serverSocket.close();
+            } catch (IOException e) {
+                System.err.println("Could not close port: 10008.");
+                System.exit(1);
+            }
+        }
+    }
+
+    public void run() {
+        System.out.println("New Communication Thread Started");
 
         try {
             DataInputStream in = new DataInputStream(clientSocket.getInputStream());

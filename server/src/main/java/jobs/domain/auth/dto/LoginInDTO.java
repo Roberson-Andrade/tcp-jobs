@@ -1,4 +1,4 @@
-package vacancy.domain.auth.dto;
+package jobs.domain.auth.dto;
 
 import org.json.JSONObject;
 
