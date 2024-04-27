@@ -1,4 +1,4 @@
-package vacancy.utils.dto;
+package vacancy.utils.controller;
 
 import org.json.JSONObject;
 

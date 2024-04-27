@@ -1,23 +1,24 @@
 package vacancy.database;
 
+import com.zaxxer.hikari.HikariDataSource;
 import org.jooq.DSLContext;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DSL;
-import org.h2.jdbcx.JdbcDataSource;
 
 import java.sql.SQLException;
 
 public class Configuration {
-    private final JdbcDataSource dataSource;
+    private final HikariDataSource ds;
 
     public Configuration() {
-        dataSource = new JdbcDataSource();
-        dataSource.setUrl("jdbc:h2:~/server/target/jooq-codegen;DB_CLOSE_DELAY=-1");
-        dataSource.setUser("sa");
-        dataSource.setPassword("123");
+        ds = new HikariDataSource();
+        ds.setDriverClassName("org.h2.jdbcx.JdbcDataSource");
+        ds.setJdbcUrl("jdbc:h2:./target/database;DB_CLOSE_DELAY=-1");
+        ds.setUsername("sa");
+        ds.setPassword("");
     }
 
     public DSLContext createDSLContext() throws SQLException {
-        return DSL.using(dataSource.getConnection(), SQLDialect.MYSQL);
+        return DSL.using(ds, SQLDialect.H2);
     }
 }

@@ -9,14 +9,17 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-    public static void request(JSONObject input) throws IOException {
-        String serverHostname = "127.0.0.1";
+    static String ip = "127.0.0.1";
+    static Integer port = 10008;
+
+    public static JSONObject request(JSONObject input) throws IOException {
+        String serverHostname = ip;
         Socket echoSocket = null;
         PrintWriter out = null;
         BufferedReader in = null;
 
         try {
-            echoSocket = new Socket(serverHostname, 10008);
+            echoSocket = new Socket(serverHostname, port);
             out = new PrintWriter(echoSocket.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(
                     echoSocket.getInputStream()));
@@ -35,11 +38,31 @@ public class Client {
         // sending to server
         out.println(inputStr);
 
-        System.out.println("Recebido: " + in.readLine());
+        String result = in.readLine();
+
+        System.out.println("Recebido: " + result);
 
         out.close();
         in.close();
         echoSocket.close();
+
+        return new JSONObject(result);
+    }
+
+    public static String getIp() {
+        return ip;
+    }
+
+    public static void setIp(String ip) {
+        Client.ip = ip;
+    }
+
+    public static Integer getPort() {
+        return port;
+    }
+
+    public static void setPort(Integer port) {
+        Client.port = port;
     }
 }
 

@@ -1,9 +1,9 @@
-package vacancy.auth;
+package vacancy.domain.auth;
 
-import com.company.project.jooq.codegen.tables.Applicant;
-import com.company.project.jooq.codegen.tables.records.ApplicantRecord;
+import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.records.ApplicantRecord;
 import org.jooq.DSLContext;
-import vacancy.auth.dto.ApplicantDTO;
+import vacancy.domain.auth.dto.ApplicantDTO;
 
 public class ApplicantRepository {
     private final DSLContext ctx;
@@ -29,6 +29,6 @@ public class ApplicantRepository {
             return applicantRecord;
         }
 
-        throw new RuntimeException("Error during user creation");
+        return null;
     }
 }

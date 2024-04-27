@@ -2,27 +2,21 @@ package vacancy.server;
 
 import org.jooq.DSLContext;
 import org.json.JSONObject;
-import vacancy.auth.ApplicantRepository;
-import vacancy.auth.AuthController;
 import vacancy.database.Configuration;
+import vacancy.domain.auth.ApplicantRepository;
+import vacancy.domain.auth.AuthController;
+import vacancy.errors.ApplicationException;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.function.Function;
 
 public class Routes {
     private static Routes instance;
-
-    private final Map<String, Function<JSONObject, JSONObject>> routes;
+    AuthController auth;
 
     private Routes() throws SQLException {
         Configuration config = new Configuration();
         DSLContext ctx = config.createDSLContext();
-
-        routes = new HashMap<>();
-        AuthController auth = new AuthController(new ApplicantRepository(ctx));
-        routes.put("loginCandidato", auth::login);
+        this.auth = new AuthController(new ApplicantRepository(ctx));
     }
 
     public static Routes getInstance() throws SQLException {
@@ -35,13 +29,21 @@ public class Routes {
     public JSONObject route(String requestStr) {
         JSONObject request = convertJsonRequest(requestStr);
         String type = request.getString("operacao");
-        Function<JSONObject, JSONObject> requestFn = routes.get(type);
 
-        if (requestFn != null) {
-            return requestFn.apply(request);
-        } else {
-            // Handle unknown type
-            return null;
+        try {
+            return switch (type) {
+                case "loginCandidato" -> auth.login(request);
+                case "cadastrarCandidato" -> auth.signIn(request);
+                default -> null;
+            };
+        } catch (ApplicationException error) {
+            JSONObject response = new JSONObject();
+
+            response.put("mensagem", error.getMessage());
+            response.put("status", error.getStatus());
+            response.put("operacao", type);
+
+            return response;
         }
     }
 

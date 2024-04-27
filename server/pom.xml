@@ -13,12 +13,16 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.release>17</maven.compiler.release>
+
+    <org.jooq.groupId>org.jooq</org.jooq.groupId>
+    <org.jooq.version>3.19.7</org.jooq.version>
+
     <db.schema>PUBLIC</db.schema>
     <db.driver>org.h2.Driver</db.driver>
-    <db.url>jdbc:h2:${basedir}/target/jooq-codegen;</db.url>
+    <db.url>jdbc:h2:./target/database</db.url>
     <db.username>sa</db.username>
-    <db.password>123</db.password>
-    <h2.version>2.2.224</h2.version>
+    <db.password/>
+    <h2.version>2.2.220</h2.version>
   </properties>
 
   <dependencies>
@@ -42,20 +46,15 @@
 
     <dependency>
       <groupId>org.jooq</groupId>
-      <artifactId>jooq</artifactId>
-      <version>3.19.7</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.jooq</groupId>
       <artifactId>jooq-meta</artifactId>
       <version>3.19.7</version>
     </dependency>
 
+    <!-- Database access -->
     <dependency>
-      <groupId>org.jooq</groupId>
-      <artifactId>jooq-codegen</artifactId>
-      <version>3.19.7</version>
+      <groupId>${org.jooq.groupId}</groupId>
+      <artifactId>jooq</artifactId>
+      <version>${org.jooq.version}</version>
     </dependency>
 
     <dependency>
@@ -68,40 +67,40 @@
   <build>
     <plugins>
       <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+        </configuration>
+      </plugin>
+
+      <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>sql-maven-plugin</artifactId>
         <version>1.5</version>
-        <configuration>
-          <driver>${db.driver}</driver>
-          <url>${db.url}</url>
-          <username>${db.username}</username>
-          <password>${db.password}</password>
-        </configuration>
-        <dependencies>
-          <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>${h2.version}</version>
-          </dependency>
-        </dependencies>
+
         <executions>
           <execution>
-            <id>execute-ddl</id>
+            <id>init-db</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>execute</goal>
             </goals>
-            <configuration>
-              <srcFiles>
-                <scrFile>src/main/resources/schema.sql</scrFile>
-              </srcFiles>
-            </configuration>
           </execution>
         </executions>
-      </plugin>
-      <plugin>
-        <groupId>org.jooq</groupId>
-        <artifactId>jooq-codegen-maven</artifactId>
+
+        <configuration>
+          <driver>org.h2.Driver</driver>
+          <url>${db.url}</url>
+          <username>${db.username}</username>
+          <password>${db.password}</password>
+          <srcFiles>
+            <srcFile>${basedir}/src/main/resources/schema.sql</srcFile>
+          </srcFiles>
+        </configuration>
+
         <dependencies>
           <dependency>
             <groupId>com.h2database</groupId>
@@ -109,13 +108,22 @@
             <version>${h2.version}</version>
           </dependency>
         </dependencies>
+      </plugin>
+
+      <plugin>
+        <groupId>${org.jooq.groupId}</groupId>
+        <artifactId>jooq-codegen-maven</artifactId>
+        <version>${org.jooq.version}</version>
+
         <executions>
           <execution>
-            <id>jooq-codegen</id>
+            <id>generate-java</id>
             <phase>generate-sources</phase>
             <goals>
               <goal>generate</goal>
             </goals>
+
+            <!-- TODO: Possibly edit the code generation configuration here, to reflect what you're doing -->
             <configuration>
               <jdbc>
                 <url>${db.url}</url>
@@ -124,12 +132,21 @@
               </jdbc>
               <generator>
                 <database>
-                  <!--includes>.*</includes-->
-                  <inputSchema>${db.schema}</inputSchema>
+                  <includes>.*</includes>
+                  <schemata>
+
+                    <!-- H2 and others are upper case by default -->
+                    <schema>
+                      <inputSchema>PUBLIC</inputSchema>
+                    </schema>
+                  </schemata>
                 </database>
+                <generate>
+                  <generatedAnnotation>false</generatedAnnotation>
+                </generate>
                 <target>
-                  <packageName>com.company.project.jooq.codegen</packageName>
-                  <directory>target/generated-sources/jooq</directory>
+                  <packageName>codegen.jooq</packageName>
+                  <directory>src/main/java</directory>
                 </target>
               </generator>
             </configuration>

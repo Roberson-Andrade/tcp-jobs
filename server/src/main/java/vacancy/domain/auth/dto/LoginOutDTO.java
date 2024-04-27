@@ -1,10 +1,12 @@
-package vacancy.auth.dto;
+package vacancy.domain.auth.dto;
 
 public class LoginOutDTO {
+    Integer status;
     String token;
 
-    public LoginOutDTO(String _token) {
-        this.token = _token;
+    public LoginOutDTO(String token, Integer status) {
+        this.token = token;
+        this.status = status;
     }
 
     public String getToken() {
