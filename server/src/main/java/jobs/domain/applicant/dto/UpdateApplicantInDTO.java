@@ -1,16 +1,20 @@
-package jobs.domain.auth.dto;
+package jobs.domain.applicant.dto;
 
 import org.json.JSONObject;
 
-public class SignInInDTO {
+public class UpdateApplicantInDTO {
+    String name;
     String email;
     String password;
-    String name;
 
-    public SignInInDTO(JSONObject input) {
+    public UpdateApplicantInDTO(JSONObject input) {
+        this.name = input.getString("nome");
         this.email = input.getString("email");
         this.password = input.getString("senha");
-        this.name = input.getString("nome");
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getEmail() {
@@ -19,9 +23,5 @@ public class SignInInDTO {
 
     public String getPassword() {
         return password;
-    }
-
-    public String getName() {
-        return name;
     }
 }

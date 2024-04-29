@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<HBox alignment="CENTER" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobs.pages.LoginController">
+    <children>
+        <VBox alignment="CENTER" minWidth="-Infinity" prefWidth="450.0" spacing="24.0">
+            <children>
+                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+                    <children>
+                        <Label text="Vagas.io" textAlignment="CENTER" textFill="#5e5e5e">
+                            <font>
+                                <Font name="System Bold" size="32.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+                <VBox fx:id="nameContainer" alignment="CENTER_LEFT" layoutX="26.0" layoutY="90.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Nome" />
+                        <TextField fx:id="name" />
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Email" />
+                        <TextField fx:id="email" />
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER_LEFT" layoutX="10.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Senha" />
+                  <PasswordField fx:id="password" />
+                        <Label fx:id="errorMessage" textFill="RED" />
+                    </children>
+                </VBox>
+                <VBox alignment="CENTER" layoutX="10.0" layoutY="200.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" spacing="16.0">
+                    <children>
+                        <Button fx:id="submitButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onSubmit" text="Entrar" />
+                        <HBox fx:id="orContainer" alignment="CENTER" spacing="8.0">
+                            <children>
+                                <Separator prefWidth="180.0" />
+                                <Label alignment="CENTER" contentDisplay="CENTER" minWidth="-Infinity" text="ou" />
+                                <Separator maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minWidth="-Infinity" prefWidth="180.0" />
+                            </children>
+                        </HBox>
+                        <Button fx:id="createAccountButton" alignment="CENTER" layoutX="10.0" layoutY="10.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onChangeToCreateAccount" text="Crie sua conta" />
+                        <Button fx:id="configButton" alignment="CENTER" layoutX="10.0" layoutY="82.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onOpenConfig" text="Configuração" />
+                    </children>
+                </VBox>
+            </children>
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="32.0" left="32.0" right="32.0" top="32.0" />
+    </padding>
+</HBox>

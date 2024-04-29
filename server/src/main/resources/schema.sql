@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS applicant (
 CREATE TABLE IF NOT EXISTS token (
   id VARCHAR(255) NOT NULL PRIMARY KEY,
   applicant_email VARCHAR(255) NOT NULL,
-  FOREIGN KEY (applicant_email) REFERENCES applicant(email)
+  FOREIGN KEY (applicant_email) REFERENCES applicant(email) ON DELETE CASCADE
 );
 

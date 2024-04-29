@@ -1,19 +1,16 @@
 package jobs.domain.auth.dto;
 
-public class LoginOutDTO {
-    Integer status;
+import jobs.utils.dto.BaseOutDTO;
+
+public class LoginOutDTO extends BaseOutDTO {
     String token;
 
     public LoginOutDTO(String token, Integer status) {
+        super(status);
         this.token = token;
-        this.status = status;
     }
 
     public String getToken() {
         return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

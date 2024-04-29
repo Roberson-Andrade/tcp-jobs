@@ -10,6 +10,8 @@ module org.jobs {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires com.jfoenix;
+    requires java.desktop;
 
     opens org.jobs.app to javafx.fxml;
     exports org.jobs.app;

@@ -1,9 +1,13 @@
-package jobs.domain.auth;
+package jobs.domain.applicant;
 
 import codegen.jooq.tables.Applicant;
 import codegen.jooq.tables.records.ApplicantRecord;
 import jobs.domain.auth.dto.ApplicantDTO;
 import org.jooq.DSLContext;
+import org.jooq.TableField;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class ApplicantRepository {
     private final DSLContext ctx;
@@ -30,5 +34,23 @@ public class ApplicantRepository {
         }
 
         return null;
+    }
+
+    public void update(String name, String email, String password) {
+        Map<TableField<ApplicantRecord, String>, String> map = new LinkedHashMap<>();
+
+        if (name != null) {
+            map.put(Applicant.APPLICANT.NAME, name);
+        }
+
+        if (password != null) {
+            map.put(Applicant.APPLICANT.PASSWORD, password);
+        }
+
+        ctx.update(Applicant.APPLICANT).set(map).where(Applicant.APPLICANT.EMAIL.eq(email)).execute();
+    }
+
+    public void delete(String email) {
+        ctx.deleteFrom(Applicant.APPLICANT).where(Applicant.APPLICANT.EMAIL.eq(email)).execute();
     }
 }

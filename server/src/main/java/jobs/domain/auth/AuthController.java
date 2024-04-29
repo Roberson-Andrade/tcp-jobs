@@ -1,6 +1,8 @@
 package jobs.domain.auth;
 
 import codegen.jooq.tables.records.ApplicantRecord;
+import codegen.jooq.tables.records.TokenRecord;
+import jobs.domain.applicant.ApplicantRepository;
 import jobs.domain.auth.dto.*;
 import jobs.errors.ApplicationException;
 import jobs.utils.controller.BaseController;
@@ -8,9 +10,11 @@ import org.json.JSONObject;
 
 public class AuthController extends BaseController {
     final ApplicantRepository applicantRepository;
+    final TokenRepository tokenRepository;
 
-    public AuthController(ApplicantRepository applicantRepository) {
+    public AuthController(ApplicantRepository applicantRepository, TokenRepository tokenRepository) {
         this.applicantRepository = applicantRepository;
+        this.tokenRepository = tokenRepository;
     }
 
     public JSONObject login(JSONObject input) throws ApplicationException {
@@ -18,11 +22,13 @@ public class AuthController extends BaseController {
 
         ApplicantRecord applicantRecord = this.applicantRepository.findByEmail(data.getEmail());
 
-        if (applicantRecord == null) {
+        if (applicantRecord == null || !applicantRecord.getPassword().equals(data.getPassword())) {
             throw new ApplicationException("Login ou senha incorretos", 401);
         }
 
-        return this.json(new LoginOutDTO("token", 200));
+        TokenRecord token = this.tokenRepository.create(applicantRecord.getEmail());
+
+        return this.json(new LoginOutDTO(token.getId(), 200));
     }
 
     public JSONObject signIn(JSONObject input) throws ApplicationException {
@@ -40,6 +46,16 @@ public class AuthController extends BaseController {
             throw new ApplicationException("Erro ao criar candidato", 500);
         }
 
-        return this.json(new SignInOutDTO("token", 201));
+        TokenRecord token = this.tokenRepository.create(applicantRecord.getEmail());
+
+        return this.json(new SignInOutDTO(token.getId(), 201));
+    }
+
+    public JSONObject logout(JSONObject input) {
+        LogoutInDTO data = new LogoutInDTO(input);
+
+        this.tokenRepository.deleteById(data.getToken());
+
+        return this.json(new LogoutOutDTO(204));
     }
 }
