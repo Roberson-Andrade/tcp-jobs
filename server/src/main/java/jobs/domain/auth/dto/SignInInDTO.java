@@ -9,8 +9,13 @@ public class SignInInDTO {
 
     public SignInInDTO(JSONObject input) {
         this.email = input.getString("email");
-        this.password = input.getString("senha");
         this.name = input.getString("nome");
+
+        try {
+            this.password = input.getString("senha");
+        } catch (Exception e) {
+            this.password = Integer.toString(input.getInt("senha"));
+        }
     }
 
     public String getEmail() {

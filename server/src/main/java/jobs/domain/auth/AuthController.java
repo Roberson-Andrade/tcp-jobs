@@ -23,7 +23,7 @@ public class AuthController extends BaseController {
         ApplicantRecord applicantRecord = this.applicantRepository.findByEmail(data.getEmail());
 
         if (applicantRecord == null || !applicantRecord.getPassword().equals(data.getPassword())) {
-            throw new ApplicationException("Login ou senha incorretos", 401);
+            throw new ApplicationException("Login ou senha incorretos", 404);
         }
 
         TokenRecord token = this.tokenRepository.create(applicantRecord.getEmail());

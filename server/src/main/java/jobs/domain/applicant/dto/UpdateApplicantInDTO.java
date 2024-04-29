@@ -10,7 +10,12 @@ public class UpdateApplicantInDTO {
     public UpdateApplicantInDTO(JSONObject input) {
         this.name = input.getString("nome");
         this.email = input.getString("email");
-        this.password = input.getString("senha");
+
+        try {
+            this.password = input.getString("senha");
+        } catch (Exception e) {
+            this.password = Integer.toString(input.getInt("senha"));
+        }
     }
 
     public String getName() {
