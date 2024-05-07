@@ -38,11 +38,12 @@ public class Routes {
     }
 
     public JSONObject route(String requestStr) {
+        JSONObject response = null;
         JSONObject request = convertJsonRequest(requestStr);
         String type = request.getString("operacao");
-        JSONObject response = null;
 
         try {
+
             switch (type) {
                 case "loginCandidato":
                     response = authController.login(request);

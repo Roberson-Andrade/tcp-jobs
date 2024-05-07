@@ -33,7 +33,7 @@ public class ProfileController implements Initializable {
         payload.put("email", email);
 
         try {
-            JSONObject response = Client.request(payload);
+            JSONObject response = Client.getInstance().request(payload);
 
             int token = response.getInt("status");
 
@@ -66,7 +66,7 @@ public class ProfileController implements Initializable {
         payload.put("senha", password.getText());
 
         try {
-            Client.request(payload);
+            Client.getInstance().request(payload);
         } catch (IOException e) {
             System.err.println(e);
         }
@@ -79,7 +79,7 @@ public class ProfileController implements Initializable {
         payload.put("email", email.getText());
 
         try {
-            Client.request(payload);
+            Client.getInstance().request(payload);
             this.goToLogin(event);
         } catch (IOException e) {
             System.err.println(e);
@@ -114,7 +114,7 @@ public class ProfileController implements Initializable {
         payload.put("token", Client.getToken());
 
         try {
-            Client.request(payload);
+            Client.getInstance().request(payload);
 
             this.goToLogin(actionEvent);
         } catch (IOException e) {

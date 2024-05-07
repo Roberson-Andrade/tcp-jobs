@@ -2,9 +2,10 @@ package jobs.server;
 
 import org.json.JSONObject;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLException;
@@ -53,18 +54,38 @@ public class Server extends Thread {
         System.out.println("New Communication Thread Started");
 
         try {
-            DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-            DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
+            PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),
+                    true);
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(clientSocket.getInputStream()));
 
-            String clientMessage = in.readLine();
-            System.out.println("Recebido: " + clientMessage);
+            String clientMessage = "";
+            boolean isLogout = false;
 
-            JSONObject response = this.routes.route(clientMessage);
+            do {
+                try {
+                    clientMessage = in.readLine();
+                    System.out.println("Recebido: " + clientMessage);
 
-            String responseStr = response.toString();
-            System.out.println("Enviado: " + responseStr);
+                    JSONObject response = this.routes.route(clientMessage);
 
-            out.write(responseStr.getBytes());
+                    String responseStr = response.toString();
+                    System.out.println("Enviado: " + responseStr);
+
+                    out.println(responseStr);
+
+                    isLogout = response.getString("operacao").equals("logout");
+                } catch (Exception error) {
+                    JSONObject errorResponse = new JSONObject();
+                    errorResponse.put("mensagem", error.getMessage());
+                    errorResponse.put("status", 400);
+                    System.out.println("Enviado: " + errorResponse);
+                    out.println(errorResponse);
+                }
+            } while (clientMessage != null && !isLogout);
+
+            in.close();
+            out.close();
         } catch (IOException e) {
             System.err.println("Problem with Communication Server: " + e.getMessage());
         } finally {

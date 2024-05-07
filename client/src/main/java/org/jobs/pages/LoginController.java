@@ -69,7 +69,6 @@ public class LoginController implements Initializable {
 
     @FXML
     protected void onOpenConfig() {
-
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("config.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
@@ -79,8 +78,8 @@ public class LoginController implements Initializable {
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (IOException ignored) {
+
         }
     }
 
@@ -104,27 +103,25 @@ public class LoginController implements Initializable {
         disableAllTextFields(true);
 
         try {
-            JSONObject response = Client.request(data);
+            JSONObject response = Client.getInstance().request(data);
 
-            if (response.getInt("status") == 401) {
-                this.showError(true);
-
-                errorMessage.setText(response.getString("mensagem"));
-            } else {
-                Client.setToken(response.getString("token"));
-
-                Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile.fxml"));
-                Scene scene = new Scene(fxmlLoader.load());
-                ProfileController controller = (ProfileController) fxmlLoader.getController();
-
-                controller.setData(email.getText());
-
-                currentStage.setScene(scene);
-                currentStage.show();
+            if (response == null) {
+                return;
             }
-        } catch (IOException error) {
-            //
+
+            Client.setToken(response.getString("token"));
+
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            ProfileController controller = fxmlLoader.getController();
+
+            controller.setData(email.getText());
+
+            currentStage.setScene(scene);
+            currentStage.show();
+        } catch (Exception error) {
+            Client.showError(error.getMessage());
         } finally {
             disableAllTextFields(false);
         }
