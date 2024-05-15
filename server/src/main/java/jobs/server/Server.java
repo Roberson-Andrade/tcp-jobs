@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.sql.SQLException;
 
 public class Server extends Thread {
@@ -73,19 +74,25 @@ public class Server extends Thread {
                     System.out.println("Enviado: " + responseStr);
 
                     out.println(responseStr);
-
-                    isLogout = response.getString("operacao").equals("logout");
+                }  catch (SocketException error) {
+                    System.out.println("SocketException " + error.getMessage());
+                    break;
+                } catch (IOException error) {
+                    System.out.println("I/O exception: " + error.getMessage());
+                    break;
                 } catch (Exception error) {
                     JSONObject errorResponse = new JSONObject();
-                    errorResponse.put("mensagem", error.getMessage());
+
+                    errorResponse.put("mensagem", "Erro interno");
                     errorResponse.put("status", 400);
                     System.out.println("Enviado: " + errorResponse);
                     out.println(errorResponse);
                 }
-            } while (clientMessage != null && !isLogout);
+            } while (clientMessage != null);
 
             in.close();
             out.close();
+            System.out.println("Connection closed");
         } catch (IOException e) {
             System.err.println("Problem with Communication Server: " + e.getMessage());
         } finally {

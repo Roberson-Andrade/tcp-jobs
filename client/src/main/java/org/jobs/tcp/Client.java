@@ -17,10 +17,14 @@ import java.net.Socket;
 
 public class Client {
     static Client instance = null;
+
     static String ip = "127.0.0.1";
     static Integer port = 22222;
+
     static String token;
+
     static int[] errorsCode = {400, 401, 403, 404, 500};
+
     Socket echoSocket = null;
     PrintWriter out = null;
     BufferedReader in = null;
@@ -53,6 +57,10 @@ public class Client {
             out.close();
             in.close();
             echoSocket.close();
+
+            out = null;
+            in = null;
+            echoSocket = null;
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }
@@ -95,7 +103,7 @@ public class Client {
         }
     }
 
-    public static void showError(String errorMessage) {
+    public static void  showError(String errorMessage) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("error.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
