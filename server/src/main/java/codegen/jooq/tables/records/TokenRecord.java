@@ -33,16 +33,16 @@ public class TokenRecord extends UpdatableRecordImpl<TokenRecord> {
     }
 
     /**
-     * Setter for <code>PUBLIC.TOKEN.APPLICANT_EMAIL</code>.
+     * Setter for <code>PUBLIC.TOKEN.EMAIL</code>.
      */
-    public void setApplicantEmail(String value) {
+    public void setEmail(String value) {
         set(1, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.TOKEN.APPLICANT_EMAIL</code>.
+     * Getter for <code>PUBLIC.TOKEN.EMAIL</code>.
      */
-    public String getApplicantEmail() {
+    public String getEmail() {
         return (String) get(1);
     }
 
@@ -69,11 +69,11 @@ public class TokenRecord extends UpdatableRecordImpl<TokenRecord> {
     /**
      * Create a detached, initialised TokenRecord
      */
-    public TokenRecord(String id, String applicantEmail) {
+    public TokenRecord(String id, String email) {
         super(Token.TOKEN);
 
         setId(id);
-        setApplicantEmail(applicantEmail);
+        setEmail(email);
         resetChangedOnNotNull();
     }
 }

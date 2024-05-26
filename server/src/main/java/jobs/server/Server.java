@@ -25,10 +25,9 @@ public class Server extends Thread {
 
         try {
             serverSocket = new ServerSocket(port);
-            System.out.println("Connection Socket Created");
             try {
                 while (true) {
-                    System.out.println("Waiting for Connection");
+                    System.out.println("Esperando por conexões");
                     new Server(serverSocket.accept());
                 }
             } catch (IOException | SQLException e) {
@@ -51,7 +50,7 @@ public class Server extends Thread {
     }
 
     public void run() {
-        System.out.println("New Communication Thread Started");
+        System.out.println("Nova conexão iniciada do IP: " + clientSocket.getInetAddress());
 
         try {
             PrintWriter out = new PrintWriter(clientSocket.getOutputStream(),
@@ -83,7 +82,7 @@ public class Server extends Thread {
                     out.println(errorResponse);
                 }
             } while (clientMessage != null && !isLogout);
-
+            System.out.println("Conexão fechada");
             in.close();
             out.close();
         } catch (IOException e) {

@@ -53,6 +53,10 @@ public class Client {
             out.close();
             in.close();
             echoSocket.close();
+
+            out = null;
+            in = null;
+            echoSocket = null;
         } catch (IOException e) {
             System.err.println(e.getMessage());
         }

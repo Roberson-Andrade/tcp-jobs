@@ -16,7 +16,7 @@ public class TokenRepository {
     public TokenRecord create(String email) {
         var tokenRecord = ctx.newRecord(Token.TOKEN);
 
-        tokenRecord.setApplicantEmail(email);
+        tokenRecord.setEmail(email);
         tokenRecord.setId(UUID.randomUUID().toString());
 
         int stored = tokenRecord.store();

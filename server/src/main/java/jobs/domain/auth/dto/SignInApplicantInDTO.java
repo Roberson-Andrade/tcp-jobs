@@ -2,12 +2,12 @@ package jobs.domain.auth.dto;
 
 import org.json.JSONObject;
 
-public class SignInInDTO {
+public class SignInApplicantInDTO {
     String email;
     String password;
     String name;
 
-    public SignInInDTO(JSONObject input) {
+    public SignInApplicantInDTO(JSONObject input) {
         this.email = input.getString("email");
         this.name = input.getString("nome");
 

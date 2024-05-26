@@ -5,6 +5,7 @@ package codegen.jooq;
 
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.Company;
 import codegen.jooq.tables.Token;
 
 import java.util.Arrays;
@@ -34,6 +35,11 @@ public class Public extends SchemaImpl {
     public final Applicant APPLICANT = Applicant.APPLICANT;
 
     /**
+     * The table <code>PUBLIC.COMPANY</code>.
+     */
+    public final Company COMPANY = Company.COMPANY;
+
+    /**
      * The table <code>PUBLIC.TOKEN</code>.
      */
     public final Token TOKEN = Token.TOKEN;
@@ -55,6 +61,7 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Applicant.APPLICANT,
+            Company.COMPANY,
             Token.TOKEN
         );
     }

@@ -6,22 +6,15 @@ package codegen.jooq.tables;
 
 import codegen.jooq.Keys;
 import codegen.jooq.Public;
-import codegen.jooq.tables.Applicant.ApplicantPath;
 import codegen.jooq.tables.records.TokenRecord;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -62,9 +55,9 @@ public class Token extends TableImpl<TokenRecord> {
     public final TableField<TokenRecord, String> ID = createField(DSL.name("ID"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.TOKEN.APPLICANT_EMAIL</code>.
+     * The column <code>PUBLIC.TOKEN.EMAIL</code>.
      */
-    public final TableField<TokenRecord, String> APPLICANT_EMAIL = createField(DSL.name("APPLICANT_EMAIL"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<TokenRecord, String> EMAIL = createField(DSL.name("EMAIL"), SQLDataType.VARCHAR(255).defaultValue(DSL.field(DSL.raw("NULL"), SQLDataType.VARCHAR)), this, "");
 
     private Token(Name alias, Table<TokenRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);
@@ -95,39 +88,6 @@ public class Token extends TableImpl<TokenRecord> {
         this(DSL.name("TOKEN"), null);
     }
 
-    public <O extends Record> Token(Table<O> path, ForeignKey<O, TokenRecord> childPath, InverseForeignKey<O, TokenRecord> parentPath) {
-        super(path, childPath, parentPath, TOKEN);
-    }
-
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class TokenPath extends Token implements Path<TokenRecord> {
-
-        private static final long serialVersionUID = 1L;
-        public <O extends Record> TokenPath(Table<O> path, ForeignKey<O, TokenRecord> childPath, InverseForeignKey<O, TokenRecord> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private TokenPath(Name alias, Table<TokenRecord> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public TokenPath as(String alias) {
-            return new TokenPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public TokenPath as(Name alias) {
-            return new TokenPath(alias, this);
-        }
-
-        @Override
-        public TokenPath as(Table<?> alias) {
-            return new TokenPath(alias.getQualifiedName(), this);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -136,23 +96,6 @@ public class Token extends TableImpl<TokenRecord> {
     @Override
     public UniqueKey<TokenRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_4;
-    }
-
-    @Override
-    public List<ForeignKey<TokenRecord, ?>> getReferences() {
-        return Arrays.asList(Keys.CONSTRAINT_4C);
-    }
-
-    private transient ApplicantPath _applicant;
-
-    /**
-     * Get the implicit join path to the <code>PUBLIC.APPLICANT</code> table.
-     */
-    public ApplicantPath applicant() {
-        if (_applicant == null)
-            _applicant = new ApplicantPath(this, Keys.CONSTRAINT_4C, null);
-
-        return _applicant;
     }
 
     @Override

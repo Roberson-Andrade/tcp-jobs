@@ -4,7 +4,10 @@ import jobs.database.Configuration;
 import jobs.domain.applicant.ApplicantController;
 import jobs.domain.applicant.ApplicantRepository;
 import jobs.domain.auth.AuthController;
+import jobs.domain.auth.LoginType;
 import jobs.domain.auth.TokenRepository;
+import jobs.domain.company.CompanyController;
+import jobs.domain.company.CompanyRepository;
 import jobs.errors.ApplicationException;
 import org.jooq.DSLContext;
 import org.json.JSONObject;
@@ -15,6 +18,7 @@ public class Routes {
     private static Routes instance;
     AuthController authController;
     ApplicantController applicantController;
+    CompanyController companyController;
 
     private Routes() throws SQLException {
         // configure pool connection
@@ -23,11 +27,13 @@ public class Routes {
 
         // instantiate the repositories
         ApplicantRepository applicantRepository = new ApplicantRepository(ctx);
+        CompanyRepository companyRepository = new CompanyRepository(ctx);
         TokenRepository tokenRepository = new TokenRepository(ctx);
 
         // instantiate the controllers
-        this.authController = new AuthController(applicantRepository, tokenRepository);
+        this.authController = new AuthController(applicantRepository, tokenRepository, companyRepository);
         this.applicantController = new ApplicantController(applicantRepository);
+        this.companyController = new CompanyController(companyRepository);
     }
 
     public static Routes getInstance() throws SQLException {
@@ -45,11 +51,12 @@ public class Routes {
         try {
 
             switch (type) {
+                // applicant routes
                 case "loginCandidato":
-                    response = authController.login(request);
+                    response = authController.login(request, LoginType.APPLICANT);
                     break;
                 case "cadastrarCandidato":
-                    response = authController.signIn(request);
+                    response = authController.signInApplicant(request);
                     break;
                 case "visualizarCandidato":
                     response = applicantController.find(request);
@@ -59,6 +66,23 @@ public class Routes {
                     break;
                 case "apagarCandidato":
                     response = applicantController.delete(request);
+                    break;
+
+                // company routes
+                case "loginEmpresa":
+                    response = authController.login(request, LoginType.COMPANY);
+                    break;
+                case "cadastrarEmpresa":
+                    response = authController.signInCompany(request);
+                    break;
+                case "visualizarEmpresa":
+                    response = companyController.find(request);
+                    break;
+                case "atualizarEmpresa":
+                    response = companyController.update(request);
+                    break;
+                case "apagarEmpresa":
+                    response = companyController.delete(request);
                     break;
                 case "logout":
                     response = authController.logout(request);

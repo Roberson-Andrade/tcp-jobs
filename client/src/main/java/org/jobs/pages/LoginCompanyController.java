@@ -21,13 +21,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class LoginCompanyController implements Initializable {
     @FXML
-    private VBox nameContainer;
+    private VBox businessNameContainer, sectorContainer, cnpjContainer, descriptionContainer;
     @FXML
     private HBox orContainer;
     @FXML
-    private TextField name, email, password;
+    private TextField businessName, email, password, cnpj, sector, description;
     @FXML
     private Button createAccountButton, submitButton;
     @FXML
@@ -36,8 +36,7 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        nameContainer.setManaged(false);
-        nameContainer.setVisible(false);
+        this.showCreateContainers(false);
 
         this.showError(false);
     }
@@ -47,16 +46,14 @@ public class LoginController implements Initializable {
         this.showError(false);
 
         if (isCreatingAccount) {
-            nameContainer.setManaged(false);
-            nameContainer.setVisible(false);
+            this.showCreateContainers(false);
             orContainer.setManaged(true);
             orContainer.setVisible(true);
 
             createAccountButton.setText("Crie sua conta");
             submitButton.setText("Entrar");
         } else {
-            nameContainer.setManaged(true);
-            nameContainer.setVisible(true);
+            this.showCreateContainers(true);
             orContainer.setManaged(false);
             orContainer.setVisible(false);
 
@@ -65,6 +62,20 @@ public class LoginController implements Initializable {
         }
 
         isCreatingAccount = !isCreatingAccount;
+    }
+
+    private void showCreateContainers(Boolean value) {
+        businessNameContainer.setManaged(value);
+        businessNameContainer.setVisible(value);
+
+        cnpjContainer.setManaged(value);
+        cnpjContainer.setVisible(value);
+
+        sectorContainer.setManaged(value);
+        sectorContainer.setVisible(value);
+
+        descriptionContainer.setManaged(value);
+        descriptionContainer.setVisible(value);
     }
 
     @FXML
@@ -90,12 +101,15 @@ public class LoginController implements Initializable {
         JSONObject data;
 
         if (isCreatingAccount) {
-            data = new JSONObject("{ \"operacao\": \"cadastrarCandidato\" }");
+            data = new JSONObject("{ \"operacao\": \"cadastrarEmpresa\" }");
             data.put("email", email.getText());
             data.put("senha", password.getText());
-            data.put("nome", name.getText());
+            data.put("razaoSocial", businessName.getText());
+            data.put("cnpj", cnpj.getText());
+            data.put("ramo", sector.getText());
+            data.put("descricao", description.getText());
         } else {
-            data = new JSONObject("{ \"operacao\": \"loginCandidato\" }");
+            data = new JSONObject("{ \"operacao\": \"loginEmpresa\" }");
             data.put("email", email.getText());
             data.put("senha", password.getText());
         }
@@ -113,9 +127,9 @@ public class LoginController implements Initializable {
 
             if (!isCreatingAccount) {
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile-company.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
-                ProfileController controller = fxmlLoader.getController();
+                ProfileCompanyController controller = fxmlLoader.getController();
 
                 controller.setData(email.getText());
 
@@ -123,6 +137,7 @@ public class LoginController implements Initializable {
                 currentStage.show();
             }
         } catch (Exception error) {
+            System.err.println(error);
             Client.showError(error.getMessage());
         } finally {
             disableAllTextFields(false);
@@ -130,7 +145,7 @@ public class LoginController implements Initializable {
     }
 
     private void disableAllTextFields(Boolean value) {
-        name.setDisable(value);
+        businessName.setDisable(value);
         password.setDisable(value);
         email.setDisable(value);
     }
@@ -142,7 +157,7 @@ public class LoginController implements Initializable {
         errorMessage.setManaged(value);
         errorMessage.setVisible(value);
 
-        name.setStyle(value ? AddErrorStyle : removeErrorStyle);
+        businessName.setStyle(value ? AddErrorStyle : removeErrorStyle);
         password.setStyle(value ? AddErrorStyle : removeErrorStyle);
         email.setStyle(value ? AddErrorStyle : removeErrorStyle);
     }

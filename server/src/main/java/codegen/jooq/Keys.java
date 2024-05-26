@@ -5,11 +5,12 @@ package codegen.jooq;
 
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.Company;
 import codegen.jooq.tables.Token;
 import codegen.jooq.tables.records.ApplicantRecord;
+import codegen.jooq.tables.records.CompanyRecord;
 import codegen.jooq.tables.records.TokenRecord;
 
-import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -28,11 +29,8 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<ApplicantRecord> CONSTRAINT_2 = Internal.createUniqueKey(Applicant.APPLICANT, DSL.name("CONSTRAINT_2"), new TableField[] { Applicant.APPLICANT.EMAIL }, true);
+    public static final UniqueKey<CompanyRecord> CONSTRAINT_6 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_6"), new TableField[] { Company.COMPANY.CODE }, true);
+    public static final UniqueKey<CompanyRecord> CONSTRAINT_63 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_63"), new TableField[] { Company.COMPANY.EMAIL }, true);
+    public static final UniqueKey<CompanyRecord> CONSTRAINT_637 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_637"), new TableField[] { Company.COMPANY.CNPJ }, true);
     public static final UniqueKey<TokenRecord> CONSTRAINT_4 = Internal.createUniqueKey(Token.TOKEN, DSL.name("CONSTRAINT_4"), new TableField[] { Token.TOKEN.ID }, true);
-
-    // -------------------------------------------------------------------------
-    // FOREIGN KEY definitions
-    // -------------------------------------------------------------------------
-
-    public static final ForeignKey<TokenRecord, ApplicantRecord> CONSTRAINT_4C = Internal.createForeignKey(Token.TOKEN, DSL.name("CONSTRAINT_4C"), new TableField[] { Token.TOKEN.APPLICANT_EMAIL }, Keys.CONSTRAINT_2, new TableField[] { Applicant.APPLICANT.EMAIL }, true);
 }

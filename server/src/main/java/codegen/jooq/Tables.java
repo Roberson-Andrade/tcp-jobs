@@ -5,6 +5,7 @@ package codegen.jooq;
 
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.Company;
 import codegen.jooq.tables.Token;
 
 
@@ -18,6 +19,11 @@ public class Tables {
      * The table <code>PUBLIC.APPLICANT</code>.
      */
     public static final Applicant APPLICANT = Applicant.APPLICANT;
+
+    /**
+     * The table <code>PUBLIC.COMPANY</code>.
+     */
+    public static final Company COMPANY = Company.COMPANY;
 
     /**
      * The table <code>PUBLIC.TOKEN</code>.

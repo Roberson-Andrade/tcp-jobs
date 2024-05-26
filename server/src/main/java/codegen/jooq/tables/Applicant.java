@@ -6,20 +6,15 @@ package codegen.jooq.tables;
 
 import codegen.jooq.Keys;
 import codegen.jooq.Public;
-import codegen.jooq.tables.Token.TokenPath;
 import codegen.jooq.tables.records.ApplicantRecord;
 
 import java.util.Collection;
 
 import org.jooq.Condition;
 import org.jooq.Field;
-import org.jooq.ForeignKey;
-import org.jooq.InverseForeignKey;
 import org.jooq.Name;
-import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
-import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -98,39 +93,6 @@ public class Applicant extends TableImpl<ApplicantRecord> {
         this(DSL.name("APPLICANT"), null);
     }
 
-    public <O extends Record> Applicant(Table<O> path, ForeignKey<O, ApplicantRecord> childPath, InverseForeignKey<O, ApplicantRecord> parentPath) {
-        super(path, childPath, parentPath, APPLICANT);
-    }
-
-    /**
-     * A subtype implementing {@link Path} for simplified path-based joins.
-     */
-    public static class ApplicantPath extends Applicant implements Path<ApplicantRecord> {
-
-        private static final long serialVersionUID = 1L;
-        public <O extends Record> ApplicantPath(Table<O> path, ForeignKey<O, ApplicantRecord> childPath, InverseForeignKey<O, ApplicantRecord> parentPath) {
-            super(path, childPath, parentPath);
-        }
-        private ApplicantPath(Name alias, Table<ApplicantRecord> aliased) {
-            super(alias, aliased);
-        }
-
-        @Override
-        public ApplicantPath as(String alias) {
-            return new ApplicantPath(DSL.name(alias), this);
-        }
-
-        @Override
-        public ApplicantPath as(Name alias) {
-            return new ApplicantPath(alias, this);
-        }
-
-        @Override
-        public ApplicantPath as(Table<?> alias) {
-            return new ApplicantPath(alias.getQualifiedName(), this);
-        }
-    }
-
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -139,18 +101,6 @@ public class Applicant extends TableImpl<ApplicantRecord> {
     @Override
     public UniqueKey<ApplicantRecord> getPrimaryKey() {
         return Keys.CONSTRAINT_2;
-    }
-
-    private transient TokenPath _token;
-
-    /**
-     * Get the implicit to-many join path to the <code>PUBLIC.TOKEN</code> table
-     */
-    public TokenPath token() {
-        if (_token == null)
-            _token = new TokenPath(this, null, Keys.CONSTRAINT_4C.getInverseKey());
-
-        return _token;
     }
 
     @Override

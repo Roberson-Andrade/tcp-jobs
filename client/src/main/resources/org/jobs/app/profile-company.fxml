@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<HBox alignment="CENTER" maxHeight="1.7976931348623157E308"
+      maxWidth="1.7976931348623157E308"
+      xmlns="http://javafx.com/javafx/17.0.2-ea"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="org.jobs.pages.ProfileCompanyController">
+    <children>
+        <VBox alignment="CENTER" prefHeight="400.0" prefWidth="800.0"
+              spacing="24.0">
+            <padding>
+                <Insets bottom="32.0" left="32.0" right="32.0" top="32.0"/>
+            </padding>
+            <children>
+                <HBox alignment="CENTER" maxHeight="60.0"
+                      maxWidth="1.7976931348623157E308" spacing="12.0">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308"
+                               maxWidth="1.7976931348623157E308"
+                               prefHeight="30.0" prefWidth="539.0"
+                               text="Meu Cadastro">
+                            <font>
+                                <Font name="System Bold" size="24.0"/>
+                            </font>
+                            <HBox.margin>
+                                <Insets/>
+                            </HBox.margin>
+                        </Label>
+                        <Button mnemonicParsing="false"
+                                onAction="#onDeleteProfile"
+                                text="Deletar cadastro"/>
+                        <Button layoutX="614.0" layoutY="13.0"
+                                mnemonicParsing="false" onAction="#onLogOut"
+                                text="Sair"/>
+                    </children>
+                </HBox>
+
+                <VBox fx:id="nameContainer" alignment="CENTER_LEFT"
+                      layoutX="26.0" layoutY="90.0" maxHeight="-Infinity"
+                      maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Razão social"/>
+                        <TextField fx:id="businessName" disable="true"/>
+                    </children>
+                </VBox>
+                <VBox fx:id="nameContainer2" alignment="CENTER_LEFT"
+                      maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
+                      spacing="8.0">
+                    <children>
+                        <Label text="CNPJ"/>
+                        <TextField fx:id="cnpj" disable="true"/>
+                    </children>
+                </VBox>
+                <VBox fx:id="nameContainer211" alignment="CENTER_LEFT"
+                      maxHeight="-Infinity" maxWidth="1.7976931348623157E308"
+                      spacing="8.0">
+                    <children>
+                        <Label text="Ramo"/>
+                        <TextField fx:id="sector" disable="true"/>
+                    </children>
+                </VBox>
+                <VBox fx:id="nameContainer21" alignment="CENTER_LEFT"
+                      layoutX="42.0" layoutY="168.0" maxHeight="-Infinity"
+                      maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Descrição"/>
+                        <TextField fx:id="description" disable="true"/>
+                    </children>
+                </VBox>
+                <VBox fx:id="nameContainer1" alignment="CENTER_LEFT"
+                      layoutX="42.0" layoutY="104.0" maxHeight="-Infinity"
+                      maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Email"/>
+                        <TextField fx:id="email" disable="true"/>
+                    </children>
+                </VBox>
+                <VBox fx:id="nameContainer11" alignment="CENTER_LEFT"
+                      layoutX="42.0" layoutY="214.0" maxHeight="-Infinity"
+                      maxWidth="1.7976931348623157E308" spacing="8.0">
+                    <children>
+                        <Label text="Senha"/>
+                        <PasswordField fx:id="password" disable="true"/>
+                    </children>
+                </VBox>
+                <Button fx:id="editButton" maxWidth="1.7976931348623157E308"
+                        mnemonicParsing="false" onAction="#onToggleDisabled"
+                        text="Editar"/>
+                <Button fx:id="cancelButton" layoutX="42.0" layoutY="342.0"
+                        maxWidth="1.7976931348623157E308"
+                        mnemonicParsing="false" onAction="#onCancel"
+                        text="Cancelar"/>
+            </children>
+        </VBox>
+    </children>
+</HBox>

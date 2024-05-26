@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity"
+      minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+      prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
+      fx:controller="org.jobs.pages.FirstController"
+      xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox alignment="CENTER" spacing="32.0">
+            <children>
+                <Label maxHeight="1.7976931348623157E308" maxWidth="-Infinity"
+                       text="Bem vindo">
+                    <font>
+                        <Font name="System Bold" size="24.0"/>
+                    </font>
+                </Label>
+                <VBox alignment="CENTER" spacing="8.0">
+                    <children>
+                        <Button mnemonicParsing="false"
+                                onAction="#onEnterAsCompany"
+                                text="Entrar como empresa"/>
+                        <Label maxHeight="1.7976931348623157E308"
+                               maxWidth="-Infinity" text="ou"/>
+                        <Button mnemonicParsing="false"
+                                onAction="#onEnterAsApplicant"
+                                text="Entrar como candidato"/>
+                    </children>
+                </VBox>
+            </children>
+        </VBox>
+    </children>
+</HBox>
