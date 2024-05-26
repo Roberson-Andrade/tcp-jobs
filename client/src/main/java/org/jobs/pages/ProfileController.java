@@ -35,6 +35,10 @@ public class ProfileController implements Initializable {
         try {
             JSONObject response = Client.getInstance().request(payload);
 
+            if(response == null) {
+                return;
+            }
+
             int token = response.getInt("status");
 
             if (token == 404) {
