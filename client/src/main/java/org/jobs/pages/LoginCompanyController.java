@@ -124,8 +124,22 @@ public class LoginCompanyController implements Initializable {
             }
 
             Client.setToken(response.getString("token"));
+            if(isCreatingAccount) {
+                try {
+                    FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("error.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load());
+                    Stage stage = new Stage();
 
-            if (!isCreatingAccount) {
+                    var errorController = (ErrorController) fxmlLoader.getController();
+                    errorController.setErrorMessage("Conta criada com sucesso");
+
+                    stage.setTitle("Conta criada");
+                    stage.setScene(scene);
+                    stage.initModality(Modality.APPLICATION_MODAL);
+                    stage.show();
+                } catch (IOException ignored) {
+                }
+            } else {
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile-company.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());

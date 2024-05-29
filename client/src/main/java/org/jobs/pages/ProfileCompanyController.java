@@ -131,7 +131,7 @@ public class ProfileCompanyController implements Initializable {
 
     private void goToLogin(ActionEvent event) {
         Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login-company.fxml"));
         Scene scene = null;
         try {
             scene = new Scene(fxmlLoader.load());
