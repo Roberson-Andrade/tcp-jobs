@@ -5,7 +5,9 @@ package codegen.jooq;
 
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.ApplicantCompetence;
 import codegen.jooq.tables.Company;
+import codegen.jooq.tables.Competence;
 import codegen.jooq.tables.Token;
 
 
@@ -21,9 +23,19 @@ public class Tables {
     public static final Applicant APPLICANT = Applicant.APPLICANT;
 
     /**
+     * The table <code>PUBLIC.APPLICANT_COMPETENCE</code>.
+     */
+    public static final ApplicantCompetence APPLICANT_COMPETENCE = ApplicantCompetence.APPLICANT_COMPETENCE;
+
+    /**
      * The table <code>PUBLIC.COMPANY</code>.
      */
     public static final Company COMPANY = Company.COMPANY;
+
+    /**
+     * The table <code>PUBLIC.COMPETENCE</code>.
+     */
+    public static final Competence COMPETENCE = Competence.COMPETENCE;
 
     /**
      * The table <code>PUBLIC.TOKEN</code>.

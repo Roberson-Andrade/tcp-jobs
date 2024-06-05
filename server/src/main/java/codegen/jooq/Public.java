@@ -5,7 +5,9 @@ package codegen.jooq;
 
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.ApplicantCompetence;
 import codegen.jooq.tables.Company;
+import codegen.jooq.tables.Competence;
 import codegen.jooq.tables.Token;
 
 import java.util.Arrays;
@@ -35,9 +37,19 @@ public class Public extends SchemaImpl {
     public final Applicant APPLICANT = Applicant.APPLICANT;
 
     /**
+     * The table <code>PUBLIC.APPLICANT_COMPETENCE</code>.
+     */
+    public final ApplicantCompetence APPLICANT_COMPETENCE = ApplicantCompetence.APPLICANT_COMPETENCE;
+
+    /**
      * The table <code>PUBLIC.COMPANY</code>.
      */
     public final Company COMPANY = Company.COMPANY;
+
+    /**
+     * The table <code>PUBLIC.COMPETENCE</code>.
+     */
+    public final Competence COMPETENCE = Competence.COMPETENCE;
 
     /**
      * The table <code>PUBLIC.TOKEN</code>.
@@ -61,7 +73,9 @@ public class Public extends SchemaImpl {
     public final List<Table<?>> getTables() {
         return Arrays.asList(
             Applicant.APPLICANT,
+            ApplicantCompetence.APPLICANT_COMPETENCE,
             Company.COMPANY,
+            Competence.COMPETENCE,
             Token.TOKEN
         );
     }

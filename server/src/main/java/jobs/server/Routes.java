@@ -87,6 +87,13 @@ public class Routes {
                 case "logout":
                     response = authController.logout(request);
                     break;
+
+                // competence routes
+                case "cadastrarCompetenciaExperiencia":
+                    response = applicantController.addApplicantCompetences(request);
+                case "visualizarCompetenciaExperiencia":
+                    response = applicantController.findApplicantCompetences(request);
+
                 default:
                     break;
             }

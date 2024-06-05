@@ -19,3 +19,36 @@ CREATE TABLE IF NOT EXISTS company (
   cnpj VARCHAR(18) NOT NULL UNIQUE
 );
 
+CREATE TABLE IF NOT EXISTS competence (
+  id VARCHAR(255) NULL DEFAULT NULL PRIMARY KEY
+);
+
+CREATE TABLE IF NOT EXISTS applicant_competence (
+  id VARCHAR(255) NOT NULL PRIMARY KEY,
+  competence_id INT NOT NULL,
+  applicant_email VARCHAR(255) NOT NULL,
+  experience INT NOT NULL,
+  FOREIGN KEY (competence_id) REFERENCES competence(id),
+  FOREIGN KEY (applicant_email) REFERENCES applicant(email)
+);
+
+INSERT INTO competence (id) VALUES ('Python'),
+  ('C#'),
+  ('C++'),
+  ('JS'),
+  ('PHP'),
+  ('Swift'),
+  ('Java'),
+  ('Go'),
+  ('SQL'),
+  ('Ruby'),
+  ('HTML'),
+  ('CSS'),
+  ('NOSQL'),
+  ('Flutter'),
+  ('TypeScript'),
+  ('Perl'),
+  ('Cobol'),
+  ('dotNet'),
+  ('Kotlin'),
+  ('Dart');

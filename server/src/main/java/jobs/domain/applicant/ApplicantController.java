@@ -2,6 +2,7 @@ package jobs.domain.applicant;
 
 import codegen.jooq.tables.records.ApplicantRecord;
 import jobs.domain.applicant.dto.*;
+import jobs.errors.ApplicationException;
 import jobs.utils.controller.BaseController;
 import org.json.JSONObject;
 
@@ -42,5 +43,30 @@ public class ApplicantController extends BaseController {
         this.applicantRepository.delete(data.getEmail());
 
         return this.json(new DeleteApplicantOutDTO(201));
+    }
+
+    public JSONObject addApplicantCompetences(JSONObject input) throws ApplicationException {
+        AddApplicantCompetencesInDTO data = new AddApplicantCompetencesInDTO(input);
+
+        if (this.applicantRepository.findByEmail(data.getEmail()) == null) {
+            throw new ApplicationException("E-mail não encontrado", 404);
+        }
+
+        this.applicantRepository.addApplicantCompetences(data.getEmail(), data.getApplicantCompetence());
+
+        return this.json(new AddApplicantCompetencesOutDTO());
+    }
+
+    public JSONObject findApplicantCompetences(JSONObject input) throws ApplicationException {
+        FindApplicantCompetencesInDTO data = new FindApplicantCompetencesInDTO(input);
+
+        if (this.applicantRepository.findByEmail(data.getEmail()) == null) {
+            throw new ApplicationException("E-mail não encontrado", 404);
+        }
+
+        var applicantCompetences = this.applicantRepository
+                .findApplicantCompetences(data.getEmail());
+
+        return this.json(new FindApplicantCompetencesOutDTO(applicantCompetences));
     }
 }

@@ -1,12 +1,17 @@
 package jobs.domain.applicant;
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.ApplicantCompetence;
+import codegen.jooq.tables.records.ApplicantCompetenceRecord;
 import codegen.jooq.tables.records.ApplicantRecord;
+import jobs.domain.applicant.dto.ApplicantCompetenceRecordIn;
 import jobs.domain.auth.dto.ApplicantDTO;
 import org.jooq.DSLContext;
 import org.jooq.TableField;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ApplicantRepository {
@@ -52,5 +57,30 @@ public class ApplicantRepository {
 
     public void delete(String email) {
         ctx.deleteFrom(Applicant.APPLICANT).where(Applicant.APPLICANT.EMAIL.eq(email)).execute();
+    }
+
+    public Integer addApplicantCompetences(String email,
+            ArrayList<ApplicantCompetenceRecordIn> applicantCompetence) {
+        int affectedRows = 0;
+
+        for (var record : applicantCompetence) {
+            var applicantRecord = ctx.newRecord(ApplicantCompetence.APPLICANT_COMPETENCE);
+
+            applicantRecord.setApplicantEmail(email);
+            applicantRecord.setId(record.competence());
+            applicantRecord.setExperience(record.experience());
+
+            int stored = applicantRecord.store();
+
+            affectedRows += stored;
+        }
+
+        return affectedRows;
+    }
+
+    public List<ApplicantCompetenceRecord> findApplicantCompetences(String email) {
+        return ctx.selectFrom(ApplicantCompetence.APPLICANT_COMPETENCE)
+                .where(ApplicantCompetence.APPLICANT_COMPETENCE.APPLICANT_EMAIL.eq(email))
+                .fetchInto(ApplicantCompetenceRecord.class);
     }
 }

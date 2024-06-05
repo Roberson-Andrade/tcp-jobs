@@ -5,12 +5,17 @@ package codegen.jooq;
 
 
 import codegen.jooq.tables.Applicant;
+import codegen.jooq.tables.ApplicantCompetence;
 import codegen.jooq.tables.Company;
+import codegen.jooq.tables.Competence;
 import codegen.jooq.tables.Token;
+import codegen.jooq.tables.records.ApplicantCompetenceRecord;
 import codegen.jooq.tables.records.ApplicantRecord;
 import codegen.jooq.tables.records.CompanyRecord;
+import codegen.jooq.tables.records.CompetenceRecord;
 import codegen.jooq.tables.records.TokenRecord;
 
+import org.jooq.ForeignKey;
 import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.impl.DSL;
@@ -29,8 +34,17 @@ public class Keys {
     // -------------------------------------------------------------------------
 
     public static final UniqueKey<ApplicantRecord> CONSTRAINT_2 = Internal.createUniqueKey(Applicant.APPLICANT, DSL.name("CONSTRAINT_2"), new TableField[] { Applicant.APPLICANT.EMAIL }, true);
+    public static final UniqueKey<ApplicantCompetenceRecord> CONSTRAINT_A = Internal.createUniqueKey(ApplicantCompetence.APPLICANT_COMPETENCE, DSL.name("CONSTRAINT_A"), new TableField[] { ApplicantCompetence.APPLICANT_COMPETENCE.ID }, true);
     public static final UniqueKey<CompanyRecord> CONSTRAINT_6 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_6"), new TableField[] { Company.COMPANY.CODE }, true);
     public static final UniqueKey<CompanyRecord> CONSTRAINT_63 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_63"), new TableField[] { Company.COMPANY.EMAIL }, true);
     public static final UniqueKey<CompanyRecord> CONSTRAINT_637 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_637"), new TableField[] { Company.COMPANY.CNPJ }, true);
+    public static final UniqueKey<CompetenceRecord> CONSTRAINT_F = Internal.createUniqueKey(Competence.COMPETENCE, DSL.name("CONSTRAINT_F"), new TableField[] { Competence.COMPETENCE.ID }, true);
     public static final UniqueKey<TokenRecord> CONSTRAINT_4 = Internal.createUniqueKey(Token.TOKEN, DSL.name("CONSTRAINT_4"), new TableField[] { Token.TOKEN.ID }, true);
+
+    // -------------------------------------------------------------------------
+    // FOREIGN KEY definitions
+    // -------------------------------------------------------------------------
+
+    public static final ForeignKey<ApplicantCompetenceRecord, CompetenceRecord> CONSTRAINT_A4 = Internal.createForeignKey(ApplicantCompetence.APPLICANT_COMPETENCE, DSL.name("CONSTRAINT_A4"), new TableField[] { ApplicantCompetence.APPLICANT_COMPETENCE.COMPETENCE_ID }, Keys.CONSTRAINT_F, new TableField[] { Competence.COMPETENCE.ID }, true);
+    public static final ForeignKey<ApplicantCompetenceRecord, ApplicantRecord> CONSTRAINT_A46 = Internal.createForeignKey(ApplicantCompetence.APPLICANT_COMPETENCE, DSL.name("CONSTRAINT_A46"), new TableField[] { ApplicantCompetence.APPLICANT_COMPETENCE.APPLICANT_EMAIL }, Keys.CONSTRAINT_2, new TableField[] { Applicant.APPLICANT.EMAIL }, true);
 }
