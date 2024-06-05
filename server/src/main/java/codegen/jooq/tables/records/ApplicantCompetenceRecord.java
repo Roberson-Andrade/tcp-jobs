@@ -21,29 +21,29 @@ public class ApplicantCompetenceRecord extends UpdatableRecordImpl<ApplicantComp
     /**
      * Setter for <code>PUBLIC.APPLICANT_COMPETENCE.ID</code>.
      */
-    public void setId(String value) {
+    public void setId(Integer value) {
         set(0, value);
     }
 
     /**
      * Getter for <code>PUBLIC.APPLICANT_COMPETENCE.ID</code>.
      */
-    public String getId() {
-        return (String) get(0);
+    public Integer getId() {
+        return (Integer) get(0);
     }
 
     /**
      * Setter for <code>PUBLIC.APPLICANT_COMPETENCE.COMPETENCE_ID</code>.
      */
-    public void setCompetenceId(Integer value) {
+    public void setCompetenceId(String value) {
         set(1, value);
     }
 
     /**
      * Getter for <code>PUBLIC.APPLICANT_COMPETENCE.COMPETENCE_ID</code>.
      */
-    public Integer getCompetenceId() {
-        return (Integer) get(1);
+    public String getCompetenceId() {
+        return (String) get(1);
     }
 
     /**
@@ -79,7 +79,7 @@ public class ApplicantCompetenceRecord extends UpdatableRecordImpl<ApplicantComp
     // -------------------------------------------------------------------------
 
     @Override
-    public Record1<String> key() {
+    public Record1<Integer> key() {
         return (Record1) super.key();
     }
 
@@ -97,7 +97,7 @@ public class ApplicantCompetenceRecord extends UpdatableRecordImpl<ApplicantComp
     /**
      * Create a detached, initialised ApplicantCompetenceRecord
      */
-    public ApplicantCompetenceRecord(String id, Integer competenceId, String applicantEmail, Integer experience) {
+    public ApplicantCompetenceRecord(Integer id, String competenceId, String applicantEmail, Integer experience) {
         super(ApplicantCompetence.APPLICANT_COMPETENCE);
 
         setId(id);

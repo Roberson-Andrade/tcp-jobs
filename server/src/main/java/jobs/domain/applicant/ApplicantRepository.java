@@ -67,7 +67,7 @@ public class ApplicantRepository {
             var applicantRecord = ctx.newRecord(ApplicantCompetence.APPLICANT_COMPETENCE);
 
             applicantRecord.setApplicantEmail(email);
-            applicantRecord.setId(record.competence());
+            applicantRecord.setCompetenceId(record.competence());
             applicantRecord.setExperience(record.experience());
 
             int stored = applicantRecord.store();
@@ -82,5 +82,20 @@ public class ApplicantRepository {
         return ctx.selectFrom(ApplicantCompetence.APPLICANT_COMPETENCE)
                 .where(ApplicantCompetence.APPLICANT_COMPETENCE.APPLICANT_EMAIL.eq(email))
                 .fetchInto(ApplicantCompetenceRecord.class);
+    }
+
+    public void deleteApplicantCompetence(String email, String competence) {
+        ctx.deleteFrom(ApplicantCompetence.APPLICANT_COMPETENCE)
+                .where(ApplicantCompetence.APPLICANT_COMPETENCE.APPLICANT_EMAIL.eq(email))
+                .and(ApplicantCompetence.APPLICANT_COMPETENCE.COMPETENCE_ID.eq(competence))
+                .execute();
+    }
+
+    public void updateApplicantCompetence(String email, String competence, Integer experience) {
+        ctx.update(ApplicantCompetence.APPLICANT_COMPETENCE)
+                .set(ApplicantCompetence.APPLICANT_COMPETENCE.EXPERIENCE, experience)
+                .where(ApplicantCompetence.APPLICANT_COMPETENCE.APPLICANT_EMAIL.eq(email))
+                .and(ApplicantCompetence.APPLICANT_COMPETENCE.COMPETENCE_ID.eq(competence))
+                .execute();
     }
 }

@@ -7,6 +7,8 @@ package codegen.jooq.tables;
 import codegen.jooq.Keys;
 import codegen.jooq.Public;
 import codegen.jooq.tables.ApplicantCompetence.ApplicantCompetencePath;
+import codegen.jooq.tables.Job.JobPath;
+import codegen.jooq.tables.JobCompetence.JobCompetencePath;
 import codegen.jooq.tables.records.CompetenceRecord;
 
 import java.util.Collection;
@@ -142,6 +144,27 @@ public class Competence extends TableImpl<CompetenceRecord> {
             _applicantCompetence = new ApplicantCompetencePath(this, null, Keys.CONSTRAINT_A4.getInverseKey());
 
         return _applicantCompetence;
+    }
+
+    private transient JobCompetencePath _jobCompetence;
+
+    /**
+     * Get the implicit to-many join path to the
+     * <code>PUBLIC.JOB_COMPETENCE</code> table
+     */
+    public JobCompetencePath jobCompetence() {
+        if (_jobCompetence == null)
+            _jobCompetence = new JobCompetencePath(this, null, Keys.CONSTRAINT_12B.getInverseKey());
+
+        return _jobCompetence;
+    }
+
+    /**
+     * Get the implicit many-to-many join path to the <code>PUBLIC.JOB</code>
+     * table
+     */
+    public JobPath job() {
+        return jobCompetence().job();
     }
 
     @Override

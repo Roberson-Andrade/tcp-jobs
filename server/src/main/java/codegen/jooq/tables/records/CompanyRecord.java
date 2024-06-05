@@ -19,16 +19,16 @@ public class CompanyRecord extends UpdatableRecordImpl<CompanyRecord> {
     private static final long serialVersionUID = 1L;
 
     /**
-     * Setter for <code>PUBLIC.COMPANY.CODE</code>.
+     * Setter for <code>PUBLIC.COMPANY.ID</code>.
      */
-    public void setCode(Integer value) {
+    public void setId(Integer value) {
         set(0, value);
     }
 
     /**
-     * Getter for <code>PUBLIC.COMPANY.CODE</code>.
+     * Getter for <code>PUBLIC.COMPANY.ID</code>.
      */
-    public Integer getCode() {
+    public Integer getId() {
         return (Integer) get(0);
     }
 
@@ -139,10 +139,10 @@ public class CompanyRecord extends UpdatableRecordImpl<CompanyRecord> {
     /**
      * Create a detached, initialised CompanyRecord
      */
-    public CompanyRecord(Integer code, String businessName, String sector, String description, String email, String password, String cnpj) {
+    public CompanyRecord(Integer id, String businessName, String sector, String description, String email, String password, String cnpj) {
         super(Company.COMPANY);
 
-        setCode(code);
+        setId(id);
         setBusinessName(businessName);
         setSector(sector);
         setDescription(description);

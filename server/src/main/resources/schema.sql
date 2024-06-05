@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS token (
 );
 
 CREATE TABLE IF NOT EXISTS company (
-  code INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   business_name VARCHAR(255) NOT NULL,
   sector VARCHAR(255) NOT NULL,
   description TEXT,
@@ -24,12 +24,32 @@ CREATE TABLE IF NOT EXISTS competence (
 );
 
 CREATE TABLE IF NOT EXISTS applicant_competence (
-  id VARCHAR(255) NOT NULL PRIMARY KEY,
-  competence_id INT NOT NULL,
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  competence_id VARCHAR(255) NOT NULL,
   applicant_email VARCHAR(255) NOT NULL,
   experience INT NOT NULL,
   FOREIGN KEY (competence_id) REFERENCES competence(id),
   FOREIGN KEY (applicant_email) REFERENCES applicant(email)
+);
+
+CREATE TABLE IF NOT EXISTS job (
+  id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  company_email VARCHAR(255) NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  field VARCHAR(255) NOT NULL,
+  salary_range VARCHAR(255) NOT NULL,
+  skill VARCHAR(255) NOT NULL,
+  experience VARCHAR(255) NOT NULL,
+  description TEXT,
+  FOREIGN KEY (company_email) REFERENCES company(email)
+);
+
+CREATE TABLE IF NOT EXISTS job_competence (
+  job_id INT NOT NULL,
+  competence_id VARCHAR(255) NOT NULL,
+  FOREIGN KEY (job_id) REFERENCES job(id) ON DELETE CASCADE,
+  FOREIGN KEY (competence_id) REFERENCES competence(id),
+  PRIMARY KEY (job_id, competence_id)
 );
 
 INSERT INTO competence (id) VALUES ('Python'),

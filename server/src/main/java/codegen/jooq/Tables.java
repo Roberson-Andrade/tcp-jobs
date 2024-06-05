@@ -8,6 +8,8 @@ import codegen.jooq.tables.Applicant;
 import codegen.jooq.tables.ApplicantCompetence;
 import codegen.jooq.tables.Company;
 import codegen.jooq.tables.Competence;
+import codegen.jooq.tables.Job;
+import codegen.jooq.tables.JobCompetence;
 import codegen.jooq.tables.Token;
 
 
@@ -36,6 +38,16 @@ public class Tables {
      * The table <code>PUBLIC.COMPETENCE</code>.
      */
     public static final Competence COMPETENCE = Competence.COMPETENCE;
+
+    /**
+     * The table <code>PUBLIC.JOB</code>.
+     */
+    public static final Job JOB = Job.JOB;
+
+    /**
+     * The table <code>PUBLIC.JOB_COMPETENCE</code>.
+     */
+    public static final JobCompetence JOB_COMPETENCE = JobCompetence.JOB_COMPETENCE;
 
     /**
      * The table <code>PUBLIC.TOKEN</code>.

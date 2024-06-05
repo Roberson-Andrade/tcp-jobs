@@ -8,11 +8,15 @@ import codegen.jooq.tables.Applicant;
 import codegen.jooq.tables.ApplicantCompetence;
 import codegen.jooq.tables.Company;
 import codegen.jooq.tables.Competence;
+import codegen.jooq.tables.Job;
+import codegen.jooq.tables.JobCompetence;
 import codegen.jooq.tables.Token;
 import codegen.jooq.tables.records.ApplicantCompetenceRecord;
 import codegen.jooq.tables.records.ApplicantRecord;
 import codegen.jooq.tables.records.CompanyRecord;
 import codegen.jooq.tables.records.CompetenceRecord;
+import codegen.jooq.tables.records.JobCompetenceRecord;
+import codegen.jooq.tables.records.JobRecord;
 import codegen.jooq.tables.records.TokenRecord;
 
 import org.jooq.ForeignKey;
@@ -35,10 +39,12 @@ public class Keys {
 
     public static final UniqueKey<ApplicantRecord> CONSTRAINT_2 = Internal.createUniqueKey(Applicant.APPLICANT, DSL.name("CONSTRAINT_2"), new TableField[] { Applicant.APPLICANT.EMAIL }, true);
     public static final UniqueKey<ApplicantCompetenceRecord> CONSTRAINT_A = Internal.createUniqueKey(ApplicantCompetence.APPLICANT_COMPETENCE, DSL.name("CONSTRAINT_A"), new TableField[] { ApplicantCompetence.APPLICANT_COMPETENCE.ID }, true);
-    public static final UniqueKey<CompanyRecord> CONSTRAINT_6 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_6"), new TableField[] { Company.COMPANY.CODE }, true);
+    public static final UniqueKey<CompanyRecord> CONSTRAINT_6 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_6"), new TableField[] { Company.COMPANY.ID }, true);
     public static final UniqueKey<CompanyRecord> CONSTRAINT_63 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_63"), new TableField[] { Company.COMPANY.EMAIL }, true);
     public static final UniqueKey<CompanyRecord> CONSTRAINT_637 = Internal.createUniqueKey(Company.COMPANY, DSL.name("CONSTRAINT_637"), new TableField[] { Company.COMPANY.CNPJ }, true);
     public static final UniqueKey<CompetenceRecord> CONSTRAINT_F = Internal.createUniqueKey(Competence.COMPETENCE, DSL.name("CONSTRAINT_F"), new TableField[] { Competence.COMPETENCE.ID }, true);
+    public static final UniqueKey<JobRecord> CONSTRAINT_1 = Internal.createUniqueKey(Job.JOB, DSL.name("CONSTRAINT_1"), new TableField[] { Job.JOB.ID }, true);
+    public static final UniqueKey<JobCompetenceRecord> CONSTRAINT_12B8 = Internal.createUniqueKey(JobCompetence.JOB_COMPETENCE, DSL.name("CONSTRAINT_12B8"), new TableField[] { JobCompetence.JOB_COMPETENCE.JOB_ID, JobCompetence.JOB_COMPETENCE.COMPETENCE_ID }, true);
     public static final UniqueKey<TokenRecord> CONSTRAINT_4 = Internal.createUniqueKey(Token.TOKEN, DSL.name("CONSTRAINT_4"), new TableField[] { Token.TOKEN.ID }, true);
 
     // -------------------------------------------------------------------------
@@ -47,4 +53,7 @@ public class Keys {
 
     public static final ForeignKey<ApplicantCompetenceRecord, CompetenceRecord> CONSTRAINT_A4 = Internal.createForeignKey(ApplicantCompetence.APPLICANT_COMPETENCE, DSL.name("CONSTRAINT_A4"), new TableField[] { ApplicantCompetence.APPLICANT_COMPETENCE.COMPETENCE_ID }, Keys.CONSTRAINT_F, new TableField[] { Competence.COMPETENCE.ID }, true);
     public static final ForeignKey<ApplicantCompetenceRecord, ApplicantRecord> CONSTRAINT_A46 = Internal.createForeignKey(ApplicantCompetence.APPLICANT_COMPETENCE, DSL.name("CONSTRAINT_A46"), new TableField[] { ApplicantCompetence.APPLICANT_COMPETENCE.APPLICANT_EMAIL }, Keys.CONSTRAINT_2, new TableField[] { Applicant.APPLICANT.EMAIL }, true);
+    public static final ForeignKey<JobRecord, CompanyRecord> CONSTRAINT_11 = Internal.createForeignKey(Job.JOB, DSL.name("CONSTRAINT_11"), new TableField[] { Job.JOB.COMPANY_EMAIL }, Keys.CONSTRAINT_63, new TableField[] { Company.COMPANY.EMAIL }, true);
+    public static final ForeignKey<JobCompetenceRecord, JobRecord> CONSTRAINT_12 = Internal.createForeignKey(JobCompetence.JOB_COMPETENCE, DSL.name("CONSTRAINT_12"), new TableField[] { JobCompetence.JOB_COMPETENCE.JOB_ID }, Keys.CONSTRAINT_1, new TableField[] { Job.JOB.ID }, true);
+    public static final ForeignKey<JobCompetenceRecord, CompetenceRecord> CONSTRAINT_12B = Internal.createForeignKey(JobCompetence.JOB_COMPETENCE, DSL.name("CONSTRAINT_12B"), new TableField[] { JobCompetence.JOB_COMPETENCE.COMPETENCE_ID }, Keys.CONSTRAINT_F, new TableField[] { Competence.COMPETENCE.ID }, true);
 }

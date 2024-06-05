@@ -17,6 +17,7 @@ import java.util.List;
 import org.jooq.Condition;
 import org.jooq.Field;
 import org.jooq.ForeignKey;
+import org.jooq.Identity;
 import org.jooq.InverseForeignKey;
 import org.jooq.Name;
 import org.jooq.Path;
@@ -60,12 +61,12 @@ public class ApplicantCompetence extends TableImpl<ApplicantCompetenceRecord> {
     /**
      * The column <code>PUBLIC.APPLICANT_COMPETENCE.ID</code>.
      */
-    public final TableField<ApplicantCompetenceRecord, String> ID = createField(DSL.name("ID"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<ApplicantCompetenceRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.APPLICANT_COMPETENCE.COMPETENCE_ID</code>.
      */
-    public final TableField<ApplicantCompetenceRecord, Integer> COMPETENCE_ID = createField(DSL.name("COMPETENCE_ID"), SQLDataType.INTEGER.nullable(false), this, "");
+    public final TableField<ApplicantCompetenceRecord, String> COMPETENCE_ID = createField(DSL.name("COMPETENCE_ID"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.APPLICANT_COMPETENCE.APPLICANT_EMAIL</code>.
@@ -144,6 +145,11 @@ public class ApplicantCompetence extends TableImpl<ApplicantCompetenceRecord> {
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
+    }
+
+    @Override
+    public Identity<ApplicantCompetenceRecord, Integer> getIdentity() {
+        return (Identity<ApplicantCompetenceRecord, Integer>) super.getIdentity();
     }
 
     @Override

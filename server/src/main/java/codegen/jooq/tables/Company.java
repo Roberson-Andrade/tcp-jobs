@@ -6,6 +6,7 @@ package codegen.jooq.tables;
 
 import codegen.jooq.Keys;
 import codegen.jooq.Public;
+import codegen.jooq.tables.Job.JobPath;
 import codegen.jooq.tables.records.CompanyRecord;
 
 import java.util.Arrays;
@@ -14,10 +15,14 @@ import java.util.List;
 
 import org.jooq.Condition;
 import org.jooq.Field;
+import org.jooq.ForeignKey;
 import org.jooq.Identity;
+import org.jooq.InverseForeignKey;
 import org.jooq.Name;
+import org.jooq.Path;
 import org.jooq.PlainSQL;
 import org.jooq.QueryPart;
+import org.jooq.Record;
 import org.jooq.SQL;
 import org.jooq.Schema;
 import org.jooq.Select;
@@ -53,9 +58,9 @@ public class Company extends TableImpl<CompanyRecord> {
     }
 
     /**
-     * The column <code>PUBLIC.COMPANY.CODE</code>.
+     * The column <code>PUBLIC.COMPANY.ID</code>.
      */
-    public final TableField<CompanyRecord, Integer> CODE = createField(DSL.name("CODE"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
+    public final TableField<CompanyRecord, Integer> ID = createField(DSL.name("ID"), SQLDataType.INTEGER.nullable(false).identity(true), this, "");
 
     /**
      * The column <code>PUBLIC.COMPANY.BUSINESS_NAME</code>.
@@ -116,6 +121,39 @@ public class Company extends TableImpl<CompanyRecord> {
         this(DSL.name("COMPANY"), null);
     }
 
+    public <O extends Record> Company(Table<O> path, ForeignKey<O, CompanyRecord> childPath, InverseForeignKey<O, CompanyRecord> parentPath) {
+        super(path, childPath, parentPath, COMPANY);
+    }
+
+    /**
+     * A subtype implementing {@link Path} for simplified path-based joins.
+     */
+    public static class CompanyPath extends Company implements Path<CompanyRecord> {
+
+        private static final long serialVersionUID = 1L;
+        public <O extends Record> CompanyPath(Table<O> path, ForeignKey<O, CompanyRecord> childPath, InverseForeignKey<O, CompanyRecord> parentPath) {
+            super(path, childPath, parentPath);
+        }
+        private CompanyPath(Name alias, Table<CompanyRecord> aliased) {
+            super(alias, aliased);
+        }
+
+        @Override
+        public CompanyPath as(String alias) {
+            return new CompanyPath(DSL.name(alias), this);
+        }
+
+        @Override
+        public CompanyPath as(Name alias) {
+            return new CompanyPath(alias, this);
+        }
+
+        @Override
+        public CompanyPath as(Table<?> alias) {
+            return new CompanyPath(alias.getQualifiedName(), this);
+        }
+    }
+
     @Override
     public Schema getSchema() {
         return aliased() ? null : Public.PUBLIC;
@@ -134,6 +172,18 @@ public class Company extends TableImpl<CompanyRecord> {
     @Override
     public List<UniqueKey<CompanyRecord>> getUniqueKeys() {
         return Arrays.asList(Keys.CONSTRAINT_63, Keys.CONSTRAINT_637);
+    }
+
+    private transient JobPath _job;
+
+    /**
+     * Get the implicit to-many join path to the <code>PUBLIC.JOB</code> table
+     */
+    public JobPath job() {
+        if (_job == null)
+            _job = new JobPath(this, null, Keys.CONSTRAINT_11.getInverseKey());
+
+        return _job;
     }
 
     @Override

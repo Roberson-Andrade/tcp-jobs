@@ -8,6 +8,8 @@ import codegen.jooq.tables.Applicant;
 import codegen.jooq.tables.ApplicantCompetence;
 import codegen.jooq.tables.Company;
 import codegen.jooq.tables.Competence;
+import codegen.jooq.tables.Job;
+import codegen.jooq.tables.JobCompetence;
 import codegen.jooq.tables.Token;
 
 import java.util.Arrays;
@@ -52,6 +54,16 @@ public class Public extends SchemaImpl {
     public final Competence COMPETENCE = Competence.COMPETENCE;
 
     /**
+     * The table <code>PUBLIC.JOB</code>.
+     */
+    public final Job JOB = Job.JOB;
+
+    /**
+     * The table <code>PUBLIC.JOB_COMPETENCE</code>.
+     */
+    public final JobCompetence JOB_COMPETENCE = JobCompetence.JOB_COMPETENCE;
+
+    /**
      * The table <code>PUBLIC.TOKEN</code>.
      */
     public final Token TOKEN = Token.TOKEN;
@@ -76,6 +88,8 @@ public class Public extends SchemaImpl {
             ApplicantCompetence.APPLICANT_COMPETENCE,
             Company.COMPANY,
             Competence.COMPETENCE,
+            Job.JOB,
+            JobCompetence.JOB_COMPETENCE,
             Token.TOKEN
         );
     }

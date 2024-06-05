@@ -69,4 +69,36 @@ public class ApplicantController extends BaseController {
 
         return this.json(new FindApplicantCompetencesOutDTO(applicantCompetences));
     }
+
+    public JSONObject deleteApplicantCompetence(JSONObject input) throws ApplicationException {
+        DeleteApplicantCompetenceInDTO data = new DeleteApplicantCompetenceInDTO(input);
+
+        if (this.applicantRepository.findByEmail(data.getEmail()) == null) {
+            throw new ApplicationException("E-mail não encontrado", 404);
+        }
+
+        for (ApplicantCompetenceRecordIn applicantCompetence : data.getApplicantCompetence()) {
+            this.applicantRepository
+                    .deleteApplicantCompetence(data.getEmail(), applicantCompetence.competence());
+        }
+
+        return this.json(new DeleteApplicantCompetenceOutDTO(201, "Competência removida"));
+
+    }
+
+    public JSONObject updateApplicantCompetence(JSONObject input) throws ApplicationException {
+        UpdateApplicantCompetenceInDTO data = new UpdateApplicantCompetenceInDTO(input);
+
+        if (this.applicantRepository.findByEmail(data.getEmail()) == null) {
+            throw new ApplicationException("E-mail não encontrado", 404);
+        }
+
+        for (ApplicantCompetenceRecordIn applicantCompetence : data.getApplicantCompetence()) {
+            this.applicantRepository
+                    .updateApplicantCompetence(data.getEmail(), applicantCompetence.competence(),
+                            applicantCompetence.experience());
+        }
+
+        return this.json(new UpdateApplicantCompetenceOutDTO(201, "Competências atualizada"));
+    }
 }

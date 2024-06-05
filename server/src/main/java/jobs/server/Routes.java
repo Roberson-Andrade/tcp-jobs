@@ -8,6 +8,8 @@ import jobs.domain.auth.LoginType;
 import jobs.domain.auth.TokenRepository;
 import jobs.domain.company.CompanyController;
 import jobs.domain.company.CompanyRepository;
+import jobs.domain.job.JobController;
+import jobs.domain.job.JobRepository;
 import jobs.errors.ApplicationException;
 import org.jooq.DSLContext;
 import org.json.JSONObject;
@@ -19,6 +21,7 @@ public class Routes {
     AuthController authController;
     ApplicantController applicantController;
     CompanyController companyController;
+    JobController jobController;
 
     private Routes() throws SQLException {
         // configure pool connection
@@ -29,11 +32,13 @@ public class Routes {
         ApplicantRepository applicantRepository = new ApplicantRepository(ctx);
         CompanyRepository companyRepository = new CompanyRepository(ctx);
         TokenRepository tokenRepository = new TokenRepository(ctx);
+        JobRepository jobRepository = new JobRepository(ctx);
 
         // instantiate the controllers
         this.authController = new AuthController(applicantRepository, tokenRepository, companyRepository);
         this.applicantController = new ApplicantController(applicantRepository);
         this.companyController = new CompanyController(companyRepository);
+        this.jobController = new JobController(jobRepository);
     }
 
     public static Routes getInstance() throws SQLException {
@@ -93,7 +98,22 @@ public class Routes {
                     response = applicantController.addApplicantCompetences(request);
                 case "visualizarCompetenciaExperiencia":
                     response = applicantController.findApplicantCompetences(request);
+                case "apagarCompetenciaExperiencia":
+                    response = applicantController.deleteApplicantCompetence(request);
+                case "atualizarCompetenciaExperiencia":
+                    response = applicantController.updateApplicantCompetence(request);
 
+                    // jobs routes
+                case "cadastrarVaga":
+                    response = jobController.addJob(request);
+                case "atualizarVaga":
+                    response = jobController.update(request);
+                case "visualizarVaga":
+                    response = jobController.getJobById(request);
+                case "apagarVaga":
+                    response = jobController.delete(request);
+                case "listarVagas":
+                    response = jobController.findAll(request);
                 default:
                     break;
             }
