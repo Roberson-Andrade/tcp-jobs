@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="16.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobs.pages.MenuApplicantController">
+   <children>
+      <Button mnemonicParsing="false" onAction="#onClickCompetence" text="Minhas competencias" />
+      <Button layoutX="269.0" layoutY="198.0" mnemonicParsing="false" onAction="#onClickProfile" text="Meu perfil" />
+      <Button layoutX="230.0" layoutY="186.0" mnemonicParsing="false" onAction="#onClickJobs" text="Vagas" />
+      <Button layoutX="288.0" layoutY="238.0" mnemonicParsing="false" onAction="#onClickLogout" text="Sair" />
+   </children>
+</VBox>

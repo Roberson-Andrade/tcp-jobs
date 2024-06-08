@@ -1,0 +1,7 @@
+Necessário para rodar os projetos:
+ - utilizar jdk 21
+ - intellij
+ - maven
+
+Na pasta "client", rodar o seguinte arquivo "client/src/main/java/org/jobs/app/App.java".
+Na past "server", rodar o seguinte arquivo "server/src/main/java/jobs/app/App.java".

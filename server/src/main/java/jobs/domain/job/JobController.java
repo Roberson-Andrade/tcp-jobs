@@ -12,6 +12,7 @@ import jobs.domain.job.dto.DeleteJobOutDTO;
 import jobs.domain.job.dto.FindAllJobInDTO;
 import jobs.domain.job.dto.FindAllJobOutDTO;
 import jobs.domain.job.dto.GetJobByIdInDTO;
+import jobs.domain.job.dto.GetJobByIdOutDTO;
 import jobs.domain.job.dto.JobDTO;
 import jobs.domain.job.dto.UpdateJobInDTO;
 import jobs.domain.job.dto.UpdateJobOutDTO;
@@ -44,7 +45,7 @@ public class JobController extends BaseController {
   public JSONObject getJobById(JSONObject input) throws ApplicationException {
     GetJobByIdInDTO data = new GetJobByIdInDTO(input);
 
-    JobRecord job = this.jobRepository.findById(data.getEmail(), data.getId());
+    JobRecord job = this.jobRepository.find(data.getId());
 
     return this.json(new GetJobByIdOutDTO(201, job));
   }

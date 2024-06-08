@@ -42,6 +42,10 @@ public class JobRepository {
     return ctx.selectFrom(Job.JOB).where(Job.JOB.COMPANY_EMAIL.eq(email)).fetchInto(JobRecord.class);
   }
 
+  public JobRecord find(Integer id) {
+    return ctx.selectFrom(Job.JOB).where(Job.JOB.ID.eq(id)).fetchOneInto(JobRecord.class);
+  }
+
   public void delete(String email, Integer id) {
     ctx.deleteFrom(Job.JOB).where(Job.JOB.ID.eq(id)).and(Job.JOB.COMPANY_EMAIL.eq(email)).execute();
   }

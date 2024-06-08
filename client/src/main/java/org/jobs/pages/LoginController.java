@@ -127,11 +127,8 @@ public class LoginController implements Initializable {
                 }
             } else {
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("menu-applicant.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
-                ProfileController controller = fxmlLoader.getController();
-
-                controller.setData(email.getText());
 
                 currentStage.setScene(scene);
                 currentStage.show();

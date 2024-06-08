@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" spacing="16.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.jobs.pages.MenuCompanyController">
+   <children>
+      <Button fx:id="company" mnemonicParsing="false" onAction="#onClickCompany" text="Minha Empresa" />
+      <Button fx:id="jobs" layoutX="251.0" layoutY="198.0" mnemonicParsing="false" onAction="#onClickJobs" text="Minhas vagas" />
+      <Button layoutX="257.0" layoutY="218.0" mnemonicParsing="false" onAction="#onClickLogout" text="Sair" />
+   </children>
+</VBox>

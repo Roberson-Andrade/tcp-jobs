@@ -141,11 +141,8 @@ public class LoginCompanyController implements Initializable {
                 }
             } else {
                 Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("profile-company.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("menu-company.fxml"));
                 Scene scene = new Scene(fxmlLoader.load());
-                ProfileCompanyController controller = fxmlLoader.getController();
-
-                controller.setData(email.getText());
 
                 currentStage.setScene(scene);
                 currentStage.show();

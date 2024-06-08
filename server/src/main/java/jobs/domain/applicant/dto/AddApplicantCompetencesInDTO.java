@@ -16,15 +16,15 @@ public class AddApplicantCompetencesInDTO {
     this.email = input.optString("email");
     this.applicantCompetence = new ArrayList<ApplicantCompetenceRecordIn>();
 
-    JSONArray array = input.optJSONArray("competencias");
+    JSONArray array = input.optJSONArray("competenciaExperiencia");
 
     if (array == null || email == null) {
       throw new ApplicationException("Parametros inválidos", 422);
     }
 
     for (int i = 0; i < array.length(); i++) {
-      this.applicantCompetence.add(new ApplicantCompetenceRecordIn(array.getJSONObject(i).optString("email"),
-          array.getJSONObject(i).optInt("competenciaExperiencia")));
+      this.applicantCompetence.add(new ApplicantCompetenceRecordIn(array.getJSONObject(i).optString("competencia"),
+          array.getJSONObject(i).optInt("experiencia")));
     }
   }
 
