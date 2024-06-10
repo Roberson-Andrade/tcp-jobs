@@ -13,14 +13,15 @@ public class UpdateJobInDTO {
   private String description;
 
   public UpdateJobInDTO(JSONObject input) throws ApplicationException {
-    this.id = input.optInt("idVaga");
-    this.name = input.optString("nome");
-    this.field = input.optString("ramo");
-    this.salaryRange = input.optString("faixaSalarial");
-    this.experience = input.optString("competencia");
-    this.description = input.optString("descricao");
+    this.id = input.optInt("idVaga", -1);
+    this.name = input.optString("nome", null);
+    this.field = input.optString("ramo", null);
+    this.salaryRange = input.optString("faixaSalarial", null);
+    this.experience = input.optString("competencia", null);
+    this.description = input.optString("descricao", null);
 
-    if (name == null || field == null || salaryRange == null || experience == null || description == null) {
+    if (name == null || field == null || salaryRange == null || experience == null || description == null
+        || this.id == -1) {
       throw new ApplicationException("Parametros inválidos", 422);
     }
   }

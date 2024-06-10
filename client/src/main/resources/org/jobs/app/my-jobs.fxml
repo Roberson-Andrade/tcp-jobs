@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.jobs.pages.MyJobsController">
+    <children>
+        <TableView fx:id="tableView" layoutX="185.0" prefHeight="200.0"
+                   prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="40.0">
+            <columns>
+                <TableColumn fx:id="id" prefWidth="83.0" text="id"/>
+                <TableColumn fx:id="name" prefWidth="309.0" text="Nome"/>
+                <TableColumn fx:id="actions" prefWidth="207.0" text="Acoes"/>
+            </columns>
+        </TableView>
+        <Button layoutX="506.0" layoutY="8.0" mnemonicParsing="false"
+                onAction="#onAdd" text="Adicionar"/>
+        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false"
+                onAction="#onClickExit" text="Voltar"/>
+    </children>
+</AnchorPane>

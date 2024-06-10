@@ -9,9 +9,15 @@ import java.io.IOException;
 
 public class MenuCompanyController {
     public void onClickCompany(ActionEvent actionEvent) {
+        Router.redirect("profile-company.fxml", actionEvent, fxml -> {
+            ProfileCompanyController controller = fxml.getController();
+
+            controller.setData(Client.getEmail());
+        });
     }
 
     public void onClickJobs(ActionEvent actionEvent) {
+        Router.redirect("my-jobs.fxml", actionEvent);
     }
 
     public void onClickLogout(ActionEvent actionEvent) {
@@ -22,7 +28,7 @@ public class MenuCompanyController {
         try {
             Client.getInstance().request(payload);
 
-            Router.redirect("login-profile.fxml", actionEvent);
+            Router.redirect("first.fxml", actionEvent);
         } catch (IOException e) {
             System.err.println(e);
         }

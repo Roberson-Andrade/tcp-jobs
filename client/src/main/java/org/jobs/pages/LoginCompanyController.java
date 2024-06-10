@@ -100,6 +100,8 @@ public class LoginCompanyController implements Initializable {
 
         JSONObject data;
 
+        Client.setEmail(email.getText());
+
         if (isCreatingAccount) {
             data = new JSONObject("{ \"operacao\": \"cadastrarEmpresa\" }");
             data.put("email", email.getText());
@@ -124,7 +126,7 @@ public class LoginCompanyController implements Initializable {
             }
 
             Client.setToken(response.getString("token"));
-            if(isCreatingAccount) {
+            if (isCreatingAccount) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("error.fxml"));
                     Scene scene = new Scene(fxmlLoader.load());

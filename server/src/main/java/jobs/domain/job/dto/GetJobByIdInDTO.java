@@ -9,10 +9,10 @@ public class GetJobByIdInDTO {
   private Integer id;
 
   public GetJobByIdInDTO(JSONObject input) throws ApplicationException {
-    this.email = input.optString("email");
-    this.id = input.optInt("idVaga");
+    this.email = input.optString("email", null);
+    this.id = input.optInt("idVaga", -1);
 
-    if (email == null || id == null) {
+    if (email == null || id == -1) {
       throw new ApplicationException("Parametros inválidos", 422);
     }
   }

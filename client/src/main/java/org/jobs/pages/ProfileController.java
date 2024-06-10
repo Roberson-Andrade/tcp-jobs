@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.jobs.app.App;
 import org.jobs.tcp.Client;
+import org.jobs.utils.Router;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -35,7 +36,7 @@ public class ProfileController implements Initializable {
         try {
             JSONObject response = Client.getInstance().request(payload);
 
-            if(response == null) {
+            if (response == null) {
                 return;
             }
 
@@ -84,7 +85,6 @@ public class ProfileController implements Initializable {
 
         try {
             Client.getInstance().request(payload);
-            this.goToLogin(event);
         } catch (IOException e) {
             System.err.println(e);
         }
@@ -113,30 +113,6 @@ public class ProfileController implements Initializable {
 
     @FXML
     public void onLogOut(ActionEvent actionEvent) {
-        var payload = new JSONObject("{ \"operacao\": \"logout\" }");
-
-        payload.put("token", Client.getToken());
-
-        try {
-            Client.getInstance().request(payload);
-
-            this.goToLogin(actionEvent);
-        } catch (IOException e) {
-            System.err.println(e);
-        }
-    }
-
-    private void goToLogin(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("login.fxml"));
-        Scene scene = null;
-        try {
-            scene = new Scene(fxmlLoader.load());
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
-
-        currentStage.setScene(scene);
-        currentStage.show();
+        Router.redirect("menu-applicant.fxml", actionEvent);
     }
 }

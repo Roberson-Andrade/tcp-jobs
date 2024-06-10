@@ -89,6 +89,8 @@ public class LoginController implements Initializable {
 
         JSONObject data;
 
+        Client.setEmail(email.getText());
+
         if (isCreatingAccount) {
             data = new JSONObject("{ \"operacao\": \"cadastrarCandidato\" }");
             data.put("email", email.getText());
@@ -110,7 +112,7 @@ public class LoginController implements Initializable {
             }
 
             Client.setToken(response.getString("token"));
-            if(isCreatingAccount) {
+            if (isCreatingAccount) {
                 try {
                     FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("error.fxml"));
                     Scene scene = new Scene(fxmlLoader.load());

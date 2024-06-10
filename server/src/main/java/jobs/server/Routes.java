@@ -52,9 +52,8 @@ public class Routes {
         JSONObject response = null;
         JSONObject request = convertJsonRequest(requestStr);
         String type = request.getString("operacao");
-
+        System.out.println(type);
         try {
-
             switch (type) {
                 // applicant routes
                 case "loginCandidato":
@@ -96,24 +95,33 @@ public class Routes {
                 // competence routes
                 case "cadastrarCompetenciaExperiencia":
                     response = applicantController.addApplicantCompetences(request);
+                    break;
                 case "visualizarCompetenciaExperiencia":
                     response = applicantController.findApplicantCompetences(request);
+                    break;
                 case "apagarCompetenciaExperiencia":
                     response = applicantController.deleteApplicantCompetence(request);
+                    break;
                 case "atualizarCompetenciaExperiencia":
                     response = applicantController.updateApplicantCompetence(request);
+                    break;
 
-                    // jobs routes
+                // jobs routes
                 case "cadastrarVaga":
                     response = jobController.addJob(request);
+                    break;
                 case "atualizarVaga":
                     response = jobController.update(request);
+                    break;
                 case "visualizarVaga":
                     response = jobController.getJobById(request);
+                    break;
                 case "apagarVaga":
                     response = jobController.delete(request);
+                    break;
                 case "listarVagas":
                     response = jobController.findAll(request);
+                    break;
                 default:
                     break;
             }

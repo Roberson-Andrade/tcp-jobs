@@ -31,11 +31,12 @@
                             </HBox.margin>
                         </Label>
                         <Button mnemonicParsing="false"
-                                onAction="#onDeleteProfile"
-                                text="Deletar cadastro"/>
+                                onAction="#onDeleteProfile" prefHeight="24.0"
+                                prefWidth="146.0" text="Deletar cadastro"/>
                         <Button layoutX="614.0" layoutY="13.0"
                                 mnemonicParsing="false" onAction="#onLogOut"
-                                text="Sair"/>
+                                prefHeight="24.0" prefWidth="72.0"
+                                text="Voltar"/>
                     </children>
                 </HBox>
 

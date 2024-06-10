@@ -8,7 +8,7 @@ public class FindAllJobInDTO {
   private String email;
 
   public FindAllJobInDTO(JSONObject input) throws ApplicationException {
-    this.email = input.optString("email");
+    this.email = input.optString("email", null);
 
     if (email == null) {
       throw new ApplicationException("Parametros inválidos", 422);

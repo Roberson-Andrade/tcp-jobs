@@ -13,11 +13,15 @@ public class MenuApplicantController {
     }
 
     public void onClickProfile(ActionEvent actionEvent) {
-        Router.redirect("profile.fxml", actionEvent);
+        Router.redirect("profile.fxml", actionEvent, fxml -> {
+            ProfileController controller = fxml.getController();
+
+            controller.setData(Client.getEmail());
+        });
     }
 
-    public void onClickJobs(ActionEvent actionEvent)  {
-        Router.redirect("my-jobs.fxml", actionEvent);
+    public void onClickJobs(ActionEvent actionEvent) {
+
     }
 
     public void onClickLogout(ActionEvent actionEvent) {
@@ -28,7 +32,7 @@ public class MenuApplicantController {
         try {
             Client.getInstance().request(payload);
 
-            Router.redirect("login.fxml", actionEvent);
+            Router.redirect("first.fxml", actionEvent);
         } catch (IOException e) {
             System.err.println(e);
         }

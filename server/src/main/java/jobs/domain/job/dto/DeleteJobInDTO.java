@@ -10,10 +10,10 @@ public class DeleteJobInDTO {
   private Integer id;
 
   public DeleteJobInDTO(JSONObject input) throws ApplicationException {
-    this.email = input.optString("email");
-    this.id = input.optInt("id");
+    this.email = input.optString("email", null);
+    this.id = input.optInt("id", -1);
 
-    if (email == null || id == null) {
+    if (email == null || id == -1) {
       throw new ApplicationException("Parametros inválidos", 422);
     }
   }

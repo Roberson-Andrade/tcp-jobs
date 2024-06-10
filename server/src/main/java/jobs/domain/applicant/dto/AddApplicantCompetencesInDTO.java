@@ -13,10 +13,10 @@ public class AddApplicantCompetencesInDTO {
   ArrayList<ApplicantCompetenceRecordIn> applicantCompetence;
 
   public AddApplicantCompetencesInDTO(JSONObject input) throws ApplicationException {
-    this.email = input.optString("email");
+    this.email = input.optString("email", null);
     this.applicantCompetence = new ArrayList<ApplicantCompetenceRecordIn>();
 
-    JSONArray array = input.optJSONArray("competenciaExperiencia");
+    JSONArray array = input.optJSONArray("competenciaExperiencia", null);
 
     if (array == null || email == null) {
       throw new ApplicationException("Parametros inválidos", 422);

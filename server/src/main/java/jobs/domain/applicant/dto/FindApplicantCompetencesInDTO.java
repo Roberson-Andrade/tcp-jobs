@@ -9,7 +9,7 @@ public class FindApplicantCompetencesInDTO {
   private String email;
 
   public FindApplicantCompetencesInDTO(JSONObject input) throws ApplicationException {
-    this.email = input.optString("email");
+    this.email = input.optString("email", null);
 
     if (email == null) {
       throw new ApplicationException("Parametros inválidos", 422);

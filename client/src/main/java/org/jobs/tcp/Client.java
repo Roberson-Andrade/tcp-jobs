@@ -21,6 +21,7 @@ public class Client {
     static Integer port = 22222;
     static String token;
     static int[] errorsCode = {400, 401, 403, 404, 500};
+    static String email;
     Socket echoSocket = null;
     PrintWriter out = null;
     BufferedReader in = null;
@@ -88,6 +89,10 @@ public class Client {
                 return null;
             }
 
+            if (response.optString("mensagem", null) != null) {
+                Client.showSuccess(response.optString("mensagem"));
+            }
+
             if (input.getString("operacao").equals("logout")) {
                 this.disconnect();
             }
@@ -109,6 +114,23 @@ public class Client {
             errorController.setErrorMessage(errorMessage);
 
             stage.setTitle("Erro");
+            stage.setScene(scene);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.show();
+        } catch (IOException ignored) {
+        }
+    }
+
+    public static void showSuccess(String successMessage) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("error.fxml"));
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage stage = new Stage();
+
+            var errorController = (ErrorController) fxmlLoader.getController();
+            errorController.setErrorMessage(successMessage);
+
+            stage.setTitle("Sucesso");
             stage.setScene(scene);
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
@@ -158,5 +180,12 @@ public class Client {
     public static void setToken(String token) {
         Client.token = token;
     }
-}
 
+    public static String getEmail() {
+        return email;
+    }
+
+    public static void setEmail(String email) {
+        Client.email = email;
+    }
+}

@@ -12,11 +12,11 @@ public class AddJobInDTO {
   private String description;
 
   public AddJobInDTO(JSONObject input) throws ApplicationException {
-    this.name = input.optString("nome");
-    this.field = input.optString("ramo");
-    this.salaryRange = input.optString("faixaSalarial");
-    this.experience = input.optString("competencias");
-    this.description = input.optString("descricao");
+    this.name = input.optString("nome", null);
+    this.field = input.optString("ramo", null);
+    this.salaryRange = input.optString("faixaSalarial", null);
+    this.experience = input.optString("competencias", null);
+    this.description = input.optString("descricao", null);
 
     if (name == null || field == null || salaryRange == null || experience == null || description == null) {
       throw new ApplicationException("Parametros inválidos", 422);

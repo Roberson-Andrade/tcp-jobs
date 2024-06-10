@@ -17,5 +17,6 @@ module org.jobs {
     exports org.jobs.app;
     exports org.jobs.pages;
     opens org.jobs.pages to javafx.fxml;
+    opens org.jobs.models to javafx.base;
 }
 

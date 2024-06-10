@@ -81,8 +81,7 @@ public class Server extends Thread {
                     break;
                 } catch (Exception error) {
                     JSONObject errorResponse = new JSONObject();
-
-                    errorResponse.put("mensagem", "Erro interno");
+                    errorResponse.put("mensagem", error.getMessage());
                     errorResponse.put("status", 400);
                     System.out.println("Enviado: " + errorResponse);
                     out.println(errorResponse);

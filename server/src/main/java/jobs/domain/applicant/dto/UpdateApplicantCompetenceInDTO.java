@@ -1,39 +1,37 @@
 package jobs.domain.applicant.dto;
 
-import java.util.ArrayList;
-
+import jobs.errors.ApplicationException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import jobs.errors.ApplicationException;
+import java.util.ArrayList;
 
 public class UpdateApplicantCompetenceInDTO {
+    private final String email;
+    ArrayList<ApplicantCompetenceRecordIn> applicantCompetence;
 
-  private final String email;
+    public UpdateApplicantCompetenceInDTO(JSONObject input) throws ApplicationException {
+        this.email = input.optString("email", null);
+        this.applicantCompetence = new ArrayList<ApplicantCompetenceRecordIn>();
 
-  ArrayList<ApplicantCompetenceRecordIn> applicantCompetence;
+        JSONArray array = input.optJSONArray("competenciaExperiencia", null);
 
-  public UpdateApplicantCompetenceInDTO(JSONObject input) throws ApplicationException {
-    this.email = input.optString("email");
-    this.applicantCompetence = new ArrayList<ApplicantCompetenceRecordIn>();
+        if (array == null || email == null) {
+            throw new ApplicationException("Parametros inválidos", 422);
+        }
 
-    JSONArray array = input.optJSONArray("competencias");
-
-    if (array == null || email == null) {
-      throw new ApplicationException("Parametros inválidos", 422);
+        for (int i = 0; i < array.length(); i++) {
+            this.applicantCompetence
+                    .add(new ApplicantCompetenceRecordIn(array.getJSONObject(i).optString("competencia"),
+                            array.getJSONObject(i).optInt("experiencia")));
+        }
     }
 
-    for (int i = 0; i < array.length(); i++) {
-      this.applicantCompetence.add(new ApplicantCompetenceRecordIn(array.getJSONObject(i).optString("email"),
-          array.getJSONObject(i).optInt("competenciaExperiencia")));
+    public String getEmail() {
+        return email;
     }
-  }
 
-  public String getEmail() {
-    return email;
-  }
-
-  public ArrayList<ApplicantCompetenceRecordIn> getApplicantCompetence() {
-    return applicantCompetence;
-  }
+    public ArrayList<ApplicantCompetenceRecordIn> getApplicantCompetence() {
+        return applicantCompetence;
+    }
 }
