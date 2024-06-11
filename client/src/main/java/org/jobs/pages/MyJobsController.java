@@ -165,8 +165,8 @@ public class MyJobsController implements Initializable {
         });
     }
 
-    public void editJob(Integer id) {
-        var existingJobData = getJobData(id);
+    public void editJob(Integer id, String jobName) {
+        var existingJobData = getJobData(id, jobName);
 
         if (existingJobData == null) {
             return;
@@ -265,7 +265,7 @@ public class MyJobsController implements Initializable {
         });
     }
 
-    private JobData getJobData(Integer id) {
+    private JobData getJobData(Integer id, String jobName) {
         var payload = new JSONObject("{ \"operacao\": \"visualizarVaga\" }");
 
         payload.put("email", Client.getEmail());
@@ -279,13 +279,12 @@ public class MyJobsController implements Initializable {
                 return null;
             }
 
-            var name = response.optString("nome", null);
             var faixaSalarial = response.optInt("faixaSalarial", -1);
             var descricao = response.optString("descricao", null);
             var estado = response.optString("estado", null);
             var competencias = response.optJSONArray("competencias", null);
 
-            if (name == null || faixaSalarial == -1 || descricao == null || estado == null || competencias == null) {
+            if (faixaSalarial == -1 || descricao == null || estado == null || competencias == null) {
                 Client.showError("Vaga não encontrada");
                 return null;
             }
@@ -296,7 +295,7 @@ public class MyJobsController implements Initializable {
                 list.add(competencias.getString(i));
             }
 
-            return new JobData(name, faixaSalarial, descricao, estado, FXCollections.observableArrayList(list));
+            return new JobData(jobName, faixaSalarial, descricao, estado, FXCollections.observableArrayList(list));
         } catch (IOException e) {
             System.err.println(e);
         }
@@ -315,7 +314,7 @@ public class MyJobsController implements Initializable {
                     {
                         editBtn.setOnAction((ActionEvent event) -> {
                             Job data = getTableView().getItems().get(getIndex());
-                            editJob(data.getId());
+                            editJob(data.getId(), data.getName());
                         });
 
                         deleteBtn.setOnAction((ActionEvent event) -> {

@@ -25,6 +25,10 @@ public class UpdateJobInDTO {
                 || this.id == -1) {
             throw new ApplicationException("Parametros inválidos", 422);
         }
+
+        for (int i = 0; i < competencesArr.length(); i++) {
+            this.competences.add(competencesArr.getString(i));
+        }
     }
 
     public Integer getId() {

@@ -52,7 +52,6 @@ public class Routes {
         JSONObject response = null;
         JSONObject request = convertJsonRequest(requestStr);
         String type = request.getString("operacao");
-        System.out.println(type);
         try {
             switch (type) {
                 // applicant routes
