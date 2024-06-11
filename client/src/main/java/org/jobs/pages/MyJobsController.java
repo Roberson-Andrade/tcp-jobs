@@ -145,14 +145,23 @@ public class MyJobsController implements Initializable {
         Optional<JobData> result = dialog.showAndWait();
 
         result.ifPresent(jobData -> {
-            System.out.println("Nome: " + jobData.getNome());
-            System.out.println("Faixa Salarial: " + jobData.getFaixaSalarial());
-            System.out.println("Descrição: " + jobData.getDescricao());
-            System.out.println("Estado: " + jobData.getEstado());
-            System.out.println("Competências: " + jobData.getCompetencias());
+            var payload = new JSONObject("{ \"operacao\": \"cadastrarVaga\" }");
 
-            // Here you can handle the new job data and make a request
-            // ...
+            payload.put("email", Client.getEmail());
+            payload.put("token", Client.getToken());
+            payload.put("nome", jobData.getNome());
+            payload.put("faixaSalarial", jobData.getFaixaSalarial());
+            payload.put("estado", jobData.getEstado());
+            payload.put("competencias", jobData.getCompetencias());
+            payload.put("descricao", jobData.getDescricao());
+
+            try {
+                Client.getInstance().request(payload);
+                this.setupData();
+            } catch (IOException e) {
+                System.err.println(e);
+            }
+
         });
     }
 
@@ -236,14 +245,23 @@ public class MyJobsController implements Initializable {
         Optional<JobData> result = dialog.showAndWait();
 
         result.ifPresent(jobData -> {
-            System.out.println("Nome: " + jobData.getNome());
-            System.out.println("Faixa Salarial: " + jobData.getFaixaSalarial());
-            System.out.println("Descrição: " + jobData.getDescricao());
-            System.out.println("Estado: " + jobData.getEstado());
-            System.out.println("Competências: " + jobData.getCompetencias());
+            var payload = new JSONObject("{ \"operacao\": \"atualizarVaga\" }");
 
-            // Here you can handle the updated job data and make a request
-            // ...
+            payload.put("email", Client.getEmail());
+            payload.put("token", Client.getToken());
+            payload.put("idVaga", id);
+            payload.put("nome", jobData.getNome());
+            payload.put("faixaSalarial", jobData.getFaixaSalarial());
+            payload.put("estado", jobData.getEstado());
+            payload.put("competencias", jobData.getCompetencias());
+            payload.put("descricao", jobData.getDescricao());
+
+            try {
+                Client.getInstance().request(payload);
+                this.setupData();
+            } catch (IOException e) {
+                System.err.println(e);
+            }
         });
     }
 

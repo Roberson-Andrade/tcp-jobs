@@ -1,8 +1,9 @@
 package jobs.domain.job.dto;
 
-public record JobDTO(String name, String field,
-        String salaryRange,
-        String experience,
-        String description) {
+import java.util.ArrayList;
 
+public record JobDTO(String name,
+                     Double salaryRange,
+                     ArrayList<String> competences,
+                     String description, String state) {
 }

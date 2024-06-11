@@ -75,29 +75,19 @@ public class Job extends TableImpl<JobRecord> {
     public final TableField<JobRecord, String> NAME = createField(DSL.name("NAME"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     /**
-     * The column <code>PUBLIC.JOB.FIELD</code>.
-     */
-    public final TableField<JobRecord, String> FIELD = createField(DSL.name("FIELD"), SQLDataType.VARCHAR(255).nullable(false), this, "");
-
-    /**
      * The column <code>PUBLIC.JOB.SALARY_RANGE</code>.
      */
-    public final TableField<JobRecord, String> SALARY_RANGE = createField(DSL.name("SALARY_RANGE"), SQLDataType.VARCHAR(255).nullable(false), this, "");
-
-    /**
-     * The column <code>PUBLIC.JOB.SKILL</code>.
-     */
-    public final TableField<JobRecord, String> SKILL = createField(DSL.name("SKILL"), SQLDataType.VARCHAR(255).nullable(false), this, "");
-
-    /**
-     * The column <code>PUBLIC.JOB.EXPERIENCE</code>.
-     */
-    public final TableField<JobRecord, String> EXPERIENCE = createField(DSL.name("EXPERIENCE"), SQLDataType.VARCHAR(255).nullable(false), this, "");
+    public final TableField<JobRecord, Double> SALARY_RANGE = createField(DSL.name("SALARY_RANGE"), SQLDataType.DOUBLE.nullable(false), this, "");
 
     /**
      * The column <code>PUBLIC.JOB.DESCRIPTION</code>.
      */
     public final TableField<JobRecord, String> DESCRIPTION = createField(DSL.name("DESCRIPTION"), SQLDataType.VARCHAR(1000000000), this, "");
+
+    /**
+     * The column <code>PUBLIC.JOB.STATE</code>.
+     */
+    public final TableField<JobRecord, String> STATE = createField(DSL.name("STATE"), SQLDataType.VARCHAR(255).nullable(false), this, "");
 
     private Job(Name alias, Table<JobRecord> aliased) {
         this(alias, aliased, (Field<?>[]) null, null);

@@ -36,11 +36,9 @@ CREATE TABLE IF NOT EXISTS job (
   id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
   company_email VARCHAR(255) NOT NULL,
   name VARCHAR(255) NOT NULL,
-  field VARCHAR(255) NOT NULL,
-  salary_range VARCHAR(255) NOT NULL,
-  skill VARCHAR(255) NOT NULL,
-  experience VARCHAR(255) NOT NULL,
+  salary_range DOUBLE NOT NULL,
   description TEXT,
+  state VARCHAR(255) NOT NULL,
   FOREIGN KEY (company_email) REFERENCES company(email)
 );
 

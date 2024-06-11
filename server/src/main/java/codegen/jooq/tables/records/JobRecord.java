@@ -61,73 +61,45 @@ public class JobRecord extends UpdatableRecordImpl<JobRecord> {
     }
 
     /**
-     * Setter for <code>PUBLIC.JOB.FIELD</code>.
-     */
-    public void setField(String value) {
-        set(3, value);
-    }
-
-    /**
-     * Getter for <code>PUBLIC.JOB.FIELD</code>.
-     */
-    public String getField() {
-        return (String) get(3);
-    }
-
-    /**
      * Setter for <code>PUBLIC.JOB.SALARY_RANGE</code>.
      */
-    public void setSalaryRange(String value) {
-        set(4, value);
+    public void setSalaryRange(Double value) {
+        set(3, value);
     }
 
     /**
      * Getter for <code>PUBLIC.JOB.SALARY_RANGE</code>.
      */
-    public String getSalaryRange() {
-        return (String) get(4);
-    }
-
-    /**
-     * Setter for <code>PUBLIC.JOB.SKILL</code>.
-     */
-    public void setSkill(String value) {
-        set(5, value);
-    }
-
-    /**
-     * Getter for <code>PUBLIC.JOB.SKILL</code>.
-     */
-    public String getSkill() {
-        return (String) get(5);
-    }
-
-    /**
-     * Setter for <code>PUBLIC.JOB.EXPERIENCE</code>.
-     */
-    public void setExperience(String value) {
-        set(6, value);
-    }
-
-    /**
-     * Getter for <code>PUBLIC.JOB.EXPERIENCE</code>.
-     */
-    public String getExperience() {
-        return (String) get(6);
+    public Double getSalaryRange() {
+        return (Double) get(3);
     }
 
     /**
      * Setter for <code>PUBLIC.JOB.DESCRIPTION</code>.
      */
     public void setDescription(String value) {
-        set(7, value);
+        set(4, value);
     }
 
     /**
      * Getter for <code>PUBLIC.JOB.DESCRIPTION</code>.
      */
     public String getDescription() {
-        return (String) get(7);
+        return (String) get(4);
+    }
+
+    /**
+     * Setter for <code>PUBLIC.JOB.STATE</code>.
+     */
+    public void setState(String value) {
+        set(5, value);
+    }
+
+    /**
+     * Getter for <code>PUBLIC.JOB.STATE</code>.
+     */
+    public String getState() {
+        return (String) get(5);
     }
 
     // -------------------------------------------------------------------------
@@ -153,17 +125,15 @@ public class JobRecord extends UpdatableRecordImpl<JobRecord> {
     /**
      * Create a detached, initialised JobRecord
      */
-    public JobRecord(Integer id, String companyEmail, String name, String field, String salaryRange, String skill, String experience, String description) {
+    public JobRecord(Integer id, String companyEmail, String name, Double salaryRange, String description, String state) {
         super(Job.JOB);
 
         setId(id);
         setCompanyEmail(companyEmail);
         setName(name);
-        setField(field);
         setSalaryRange(salaryRange);
-        setSkill(skill);
-        setExperience(experience);
         setDescription(description);
+        setState(state);
         resetChangedOnNotNull();
     }
 }
