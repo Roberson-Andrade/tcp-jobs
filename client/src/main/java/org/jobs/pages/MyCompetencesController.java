@@ -127,10 +127,6 @@ public class MyCompetencesController implements Initializable {
             String competence = competenceExperienceData.getKey();
             String experience = competenceExperienceData.getValue();
 
-            // Here you can handle the new competence and experience values and make a
-            // request
-            System.out.println("Competence: " + competence + ", Experience: " + experience);
-
             var payload = new JSONObject("{ \"operacao\": \"cadastrarCompetenciaExperiencia\" }");
 
             payload.put("email", Client.getEmail());

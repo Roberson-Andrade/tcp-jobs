@@ -121,6 +121,9 @@ public class Routes {
                 case "listarVagas":
                     response = jobController.findAll(request);
                     break;
+                case "filtrarVagas":
+                    response = jobController.filterJobs(request);
+                    break;
                 default:
                     break;
             }
@@ -129,7 +132,9 @@ public class Routes {
             response.put("mensagem", error.getMessage());
             response.put("status", error.getStatus());
         } finally {
-            response.put("operacao", type);
+            if (response != null) {
+                response.put("operacao", type);
+            }
         }
 
         return response;

@@ -6,8 +6,12 @@ import codegen.jooq.tables.records.JobCompetenceRecord;
 import codegen.jooq.tables.records.JobRecord;
 import jobs.domain.job.dto.AddJobInDTO;
 import jobs.domain.job.dto.JobDTO;
-import org.jooq.DSLContext;
 
+import org.jooq.Condition;
+import org.jooq.DSLContext;
+import org.jooq.impl.DSL;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class JobRepository {
@@ -84,5 +88,33 @@ public class JobRepository {
                 .set(Job.JOB.STATE, jobDTO.state())
                 .where(Job.JOB.ID.eq(id))
                 .execute();
+    }
+
+    public List<JobRecord> filterJobs(String email, List<String> competences, String type) {
+        var query = ctx.selectFrom(Job.JOB)
+                .where(Job.JOB.COMPANY_EMAIL.eq(email));
+
+        if (competences != null && !competences.isEmpty()) {
+            List<Condition> conditions = new ArrayList<>();
+            for (String competence : competences) {
+                Condition condition = DSL.exists(
+                        ctx.selectOne()
+                                .from(JobCompetence.JOB_COMPETENCE)
+                                .where(JobCompetence.JOB_COMPETENCE.JOB_ID.eq(Job.JOB.ID))
+                                .and(JobCompetence.JOB_COMPETENCE.COMPETENCE_ID.eq(competence)));
+                conditions.add(condition);
+            }
+
+            Condition finalCondition;
+            if ("E".equalsIgnoreCase(type)) {
+                finalCondition = DSL.and(conditions);
+            } else {
+                finalCondition = DSL.or(conditions);
+            }
+
+            query.and(finalCondition);
+        }
+
+        return query.fetchInto(JobRecord.class);
     }
 }

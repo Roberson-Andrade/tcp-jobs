@@ -197,11 +197,10 @@ public class MyJobsController implements Initializable {
 
         TextField estadoField = new TextField();
         estadoField.setPromptText("Estado");
-
         ListView<String> competenciasListView = new ListView<>(FXCollections.observableArrayList(
                 "Python", "C#", "C++", "JS", "PHP", "Swift", "Java", "Go",
                 "SQL", "Ruby", "HTML", "CSS", "NOSQL", "Flutter", "TypeScript",
-                "Perl", "Cobol", ".NET", "Kotlin", "Dart"));
+                "Perl", "Cobol", "dotNet", "Kotlin", "Dart"));
         competenciasListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         if (existingJobData != null) {

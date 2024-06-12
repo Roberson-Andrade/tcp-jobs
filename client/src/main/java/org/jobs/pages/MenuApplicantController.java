@@ -21,7 +21,7 @@ public class MenuApplicantController {
     }
 
     public void onClickJobs(ActionEvent actionEvent) {
-
+        Router.redirect("jobs.fxml", actionEvent);
     }
 
     public void onClickLogout(ActionEvent actionEvent) {

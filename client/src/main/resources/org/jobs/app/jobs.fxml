@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="450.0" prefWidth="708.0"
+            xmlns="http://javafx.com/javafx/17.0.2-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="org.jobs.pages.JobsController">
+    <children>
+        <TableView fx:id="tableView" layoutX="185.0" prefHeight="200.0"
+                   prefWidth="200.0" AnchorPane.bottomAnchor="0.0"
+                   AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="40.0">
+            <columns>
+                <TableColumn fx:id="id" prefWidth="54.0" text="id"/>
+                <TableColumn fx:id="name" prefWidth="111.0" text="Nome"/>
+                <TableColumn fx:id="salary" prefWidth="121.0"
+                             text="Faixa Salarial"/>
+                <TableColumn fx:id="description" minWidth="7.0"
+                             prefWidth="112.0" text="Descricao"/>
+                <TableColumn fx:id="state" prefWidth="118.0" text="Estado"/>
+                <TableColumn fx:id="competences" prefWidth="182.0"
+                             text="Competencias"/>
+            </columns>
+        </TableView>
+        <Button layoutX="627.0" layoutY="8.0" mnemonicParsing="false"
+                onAction="#onFilter" text="Filtrar"/>
+        <Button layoutX="14.0" layoutY="8.0" mnemonicParsing="false"
+                onAction="#onClickExit" text="Voltar"/>
+    </children>
+</AnchorPane>

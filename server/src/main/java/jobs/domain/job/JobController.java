@@ -8,6 +8,7 @@ import jobs.utils.controller.BaseController;
 import org.json.JSONObject;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class JobController extends BaseController {
     final JobRepository jobRepository;
@@ -28,7 +29,7 @@ public class JobController extends BaseController {
         FindAllJobInDTO data = new FindAllJobInDTO(input);
 
         List<JobRecord> jobs = this.jobRepository.findAllByEmail(data.getEmail());
-        System.out.println("jobs: " + jobs);
+
         return this.json(new FindAllJobOutDTO(201, jobs));
     }
 
@@ -57,5 +58,20 @@ public class JobController extends BaseController {
                 data.getCompetences(), data.getDescription(), data.getState()));
 
         return this.json(new UpdateJobOutDTO(201, "Vaga atualizada com sucesso"));
+    }
+
+    public JSONObject filterJobs(JSONObject input) throws ApplicationException {
+        FilterJobsInDTO data = new FilterJobsInDTO(input);
+
+        // Get the filtered jobs based on competences and type
+        List<JobRecord> jobs = this.jobRepository.filterJobs(data.getEmail(), data.getCompetences(), data.getType());
+
+        // Fetch competences for each job
+        List<JobWithCompetencesDTO> jobWithCompetencesList = jobs.stream().map(job -> {
+            List<JobCompetenceRecord> competences = this.jobRepository.findCompetences(job.getId());
+            return new JobWithCompetencesDTO(job, competences);
+        }).collect(Collectors.toList());
+
+        return this.json(new FilterJobsOutDTO(jobWithCompetencesList));
     }
 }
