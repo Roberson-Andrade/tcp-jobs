@@ -32,6 +32,7 @@ public class ProfileCompanyController implements Initializable {
         var payload = new JSONObject("{ \"operacao\": \"visualizarEmpresa\" }");
 
         payload.put("email", email);
+        payload.put("token", Client.getToken());
 
         try {
             JSONObject response = Client.getInstance().request(payload);
@@ -64,6 +65,8 @@ public class ProfileCompanyController implements Initializable {
         var payload = new JSONObject("{ \"operacao\": \"atualizarEmpresa\" }");
 
         payload.put("email", email.getText());
+        payload.put("token", Client.getToken());
+
         payload.put("razaoSocial", businessName.getText());
         payload.put("cnpj", cnpj.getText());
         payload.put("ramo", sector.getText());
@@ -82,6 +85,7 @@ public class ProfileCompanyController implements Initializable {
         var payload = new JSONObject("{ \"operacao\": \"apagarEmpresa\" }");
 
         payload.put("email", email.getText());
+        payload.put("token", Client.getToken());
 
         try {
             Client.getInstance().request(payload);

@@ -32,6 +32,7 @@ public class ProfileController implements Initializable {
         var payload = new JSONObject("{ \"operacao\": \"visualizarCandidato\" }");
 
         payload.put("email", email);
+        payload.put("token", Client.getToken());
 
         try {
             JSONObject response = Client.getInstance().request(payload);
@@ -67,6 +68,7 @@ public class ProfileController implements Initializable {
         var payload = new JSONObject("{ \"operacao\": \"atualizarCandidato\" }");
 
         payload.put("email", email.getText());
+        payload.put("token", Client.getToken());
         payload.put("nome", name.getText());
         payload.put("senha", password.getText());
 
@@ -82,6 +84,7 @@ public class ProfileController implements Initializable {
         var payload = new JSONObject("{ \"operacao\": \"apagarCandidato\" }");
 
         payload.put("email", email.getText());
+        payload.put("token", Client.getToken());
 
         try {
             Client.getInstance().request(payload);
