@@ -91,8 +91,7 @@ public class JobRepository {
     }
 
     public List<JobRecord> filterJobs(String email, List<String> competences, String type) {
-        var query = ctx.selectFrom(Job.JOB)
-                .where(Job.JOB.COMPANY_EMAIL.eq(email));
+        var query = ctx.selectFrom(Job.JOB);
 
         if (competences != null && !competences.isEmpty()) {
             List<Condition> conditions = new ArrayList<>();
@@ -106,13 +105,13 @@ public class JobRepository {
             }
 
             Condition finalCondition;
-            if ("E".equalsIgnoreCase(type)) {
+            if ("AND".equalsIgnoreCase(type)) {
                 finalCondition = DSL.and(conditions);
             } else {
                 finalCondition = DSL.or(conditions);
             }
 
-            query.and(finalCondition);
+            query.where(finalCondition);
         }
 
         return query.fetchInto(JobRecord.class);

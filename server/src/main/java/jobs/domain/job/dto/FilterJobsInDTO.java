@@ -11,12 +11,17 @@ public class FilterJobsInDTO {
     ArrayList<String> competences = new ArrayList<>();
 
     public FilterJobsInDTO(JSONObject data) throws ApplicationException {
-        this.type = data.optString("tipo", null);
+        var filters = data.optJSONObject("filtros", null);
+
+        if (filters == null) {
+            throw new ApplicationException("Parametros inválidos", 422);
+        }
+
         this.email = data.optString("email", null);
+        this.type = filters.optString("tipo", null);
+        var competencesArr = filters.optJSONArray("competencias", null);
 
-        var competencesArr = data.optJSONArray("competencias", null);
-
-        if (type == null || competencesArr == null || email == null) {
+        if (type == null || competencesArr == null || email == null ) {
             throw new ApplicationException("Parametros inválidos", 422);
         }
 

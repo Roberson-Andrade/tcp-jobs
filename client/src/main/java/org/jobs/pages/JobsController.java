@@ -72,8 +72,8 @@ public class JobsController implements Initializable {
                 "Perl", "Cobol", "dotNet", "Kotlin", "Dart"));
         competenciasListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-        ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList("OU", "E"));
-        choiceBox.setValue("OU");
+        ChoiceBox<String> choiceBox = new ChoiceBox<>(FXCollections.observableArrayList("OR", "AND"));
+        choiceBox.setValue("OR");
 
         grid.add(new Label("Competências:"), 0, 0);
         grid.add(competenciasListView, 1, 0);
@@ -96,12 +96,14 @@ public class JobsController implements Initializable {
 
         result.ifPresent(filterJobData -> {
             var payload = new JSONObject("{ \"operacao\": \"filtrarVagas\" }");
-
+            var filter = new JSONObject();
             payload.put("email", Client.getEmail());
             payload.put("token", Client.getToken());
-            payload.put("competencias", filterJobData.getCompetencias());
-            payload.put("tipo", filterJobData.getTipo());
 
+            filter.put("competencias", filterJobData.getCompetencias());
+            filter.put("tipo", filterJobData.getTipo());
+
+            payload.put("filtros", filter);
             try {
                 JSONObject response = Client.getInstance().request(payload);
 
@@ -112,7 +114,10 @@ public class JobsController implements Initializable {
                 // continue here
 
                 List<FilteredJob> results = new ArrayList<>();
-                JSONArray jobsArray = response.getJSONArray("vagas");
+                JSONArray jobsArray = response.optJSONArray("vagas", null);
+                if(jobsArray == null) {
+                    return;
+                }
                 for (int i = 0; i < jobsArray.length(); i++) {
                     JSONObject jobObject = jobsArray.getJSONObject(i);
 
